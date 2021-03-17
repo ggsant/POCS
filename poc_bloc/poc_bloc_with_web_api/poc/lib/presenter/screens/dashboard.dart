@@ -1,13 +1,28 @@
-import 'package:bytebank/screens/contacts_list.dart';
-import 'package:bytebank/screens/transactions_list.dart';
+import 'package:bytebank/presenter/screens/change_name/change_name.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Dashboard extends StatelessWidget {
+import 'contacts_list.dart';
+import 'transactions_list.dart';
+
+class DashboardContainer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => NameCubit('Gabriela'),
+      child: DashboardView(),
+    );
+  }
+}
+
+class DashboardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dashboard'),
+        title: BlocBuilder<NameCubit, String>(
+          builder: (context, state) => Text('Seja bem vindo $state'),
+        ),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -32,6 +47,11 @@ class Dashboard extends StatelessWidget {
                   Icons.description,
                   onClick: () => _showTransactionsList(context),
                 ),
+                _FeatureItem(
+                  'Change name',
+                  Icons.description,
+                  onClick: () => _showChangeName(context),
+                ),
               ],
             ),
           ),
@@ -44,6 +64,17 @@ class Dashboard extends StatelessWidget {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => ContactsList(),
+      ),
+    );
+  }
+
+  void _showChangeName(BuildContext blocContext) {
+    Navigator.of(blocContext).push(
+      MaterialPageRoute(
+        builder: (context) => BlocProvider.value(
+          value: BlocProvider.of<NameCubit>(blocContext),
+          child: NameContainer(),
+        ),
       ),
     );
   }
