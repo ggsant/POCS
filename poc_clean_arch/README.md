@@ -36,14 +36,124 @@ A ideia por trás do conceito de arquitetura limpa é tornar o **projeto escalá
 * Testável: A camada de regra de negócios deve ser testada sem dependência de UI, banco ou serviço da web.
 * Independência da UI: Seu sistema não deve estar ciente da existência de uma UI, sendo possível substituir sua interface gráfica por um terminal sem problemas.
 * Independência de agentes externos: Suas regras de negócios não devem saber sobre a existência do mundo ao seu redor. Em outras palavras, ela só precisa saber o que precisa para cumprir sua responsabilidade.
+
 # Camadas
-
-
 
 ![0_iU9Ks05_GTtGh6zV](https://user-images.githubusercontent.com/61892998/111867753-cc227300-8954-11eb-8e24-9ce5c0c1ea9d.jpg)
 
+**Fluxo de dados**
+Vamos começar explicando o Fluxo de Dados na Arquitetura Limpa com um exemplo.
+Imagine abrir um aplicativo que carrega uma lista de postagens que contém informações adicionais do usuário.
+
+ O fluxo de dados seria:
+
+1. A UI chama o método do Presenter/ViewModel.
+2. O Presenter/ViewModel executa o caso de uso.
+3. O caso de uso combina dados do usuário e pós-repositórios.
+4. Cada repositório retorna dados de uma fonte de dados (em cache ou remota).
+5. As informações fluem de volta para a IU, onde exibimos a lista de postagens.
+
+No exemplo acima, podemos ver como a ação do usuário flui da IU até a fonte de dados e, em seguida, flui de volta para baixo. Este fluxo de dados não é o mesmo fluxo da regra de dependência.
+# Regra de Dependência
+A regra de dependência é o relacionamento que existe entre as diferentes camadas. Antes de explicar a regra de dependência na arquitetura limpa, vamos girar o diagrama 90 graus. Isso ajuda a apontar camadas e limites.
+
+![1_vcnYWWn_zhNk6I30meBaPg (1)](https://user-images.githubusercontent.com/61892998/111887425-bf813780-89b3-11eb-9159-c429a59ddef3.png)
+
+Vamos identificar as diferentes camadas e limites.
+* O Presenter contém a UI (atividades e fragmentos) que são coordenadas por Presentations/ViewModels que executam um ou vários casos de uso. A camada de apresentação depende da camada de domínio.
+
+* O Domain é a parte MAIS INTERIOR do diagrama (sem dependências com outras camadas) e contém Entidades, casos de uso e interfaces de repositório. Os casos de uso combinam dados de 1 ou várias interfaces de repositório.
+
+* O Data contém implementações de repositório e 1 ou várias fontes de dados. Os repositórios são responsáveis ​​por coordenar os dados das diferentes fontes de dados. A camada de dados depende da camada de domínio.
+
+![1_twBQBXvePT8eO7FbYcdzTg](https://user-images.githubusercontent.com/61892998/111887426-c445eb80-89b3-11eb-9d99-55af4ca42570.png)
+
+Vamos quebrar toda a arquitetura do Clean em partes.
+
+Declaração de exemplo:
+Digamos que você tem que construir um ap p cação por exemplo, como o Facebook. Que suporta apenas 2 recursos:
+
+1. Vá buscar uma lista de postagens para um determinado usuário
+2. Para curtir um determinado post.
+
+Aplicação bastante simples, hein. Então, como arquitetar esse aplicativo?
+
+O projeto de arquitetura deve incluir estes módulos:
+
+1. Módulo para apresentação dos dados. Isso é chamado de camada de apresentação .
+2. Módulo de onde obter dados / feeds. Pode ser local (como DB) ou Remoto (como chamadas REST). Isso é chamado de camada de dados.
+3. Lógica de negócios que mostra os feeds / para lidar com gosto e não gosto. Isso é chamado de Camada de Domínio .
+
+Então, como esses módulos irão interagir uns com os outros? É assim que a arquitetura é desenvolvida.
+A arquitetura limpa basicamente gira em torno dos princípios [SOLID](https://goo.gl/MkniDh).
+Vamos explicar cada módulo:
+# Domain 
+Isso pode ser considerado o núcleo de nosso aplicativo. Portanto, é aqui que nosso foco principal deve estar.
+E é aqui que entra o verdadeiro poder da arquitetura limpa.
+A Camada de Domínio pode ter:
+
+1. Casos de uso
+2. Entidades
+3. Interfaces do DataLayer
 
 
+Qual é o verdadeiro problema que precisamos resolver?
+
+            “Carregar uma lista de postagens com algumas informações do usuário para cada postagem e poder dar likes nessa postagem.”
+
+Este é o centro de nossa solução, não importa de onde os dados vêm ou como os apresentamos. Isso pertence a um caso de uso dentro de nossa Camada de Domínio, que é a camada mais interna da arquitetura (lógica de negócios).
+
+Para aqueles que ainda não experimentaram o Clean Architecture, os casos de uso evitarão Presenters/ViewModels, já que a camada de apresentação só executará os casos de uso e notificará a visão (Separação de preocupações + Princípio de responsabilidade única). Isso também irá melhorar os pontos RUDT ( R ead, U pdate, D ebug & T est) de seu projeto.
+
+**Como o domínio NÃO depende dos dados?**
+
+Isso ocorre porque os casos de uso no domínio não estão usando a implementação real do repositório que fica na camada de dados. Em vez disso, está apenas usando uma abstração/interface na Camada de Domínio que atua como um contrato para qualquer repositório que deseja fornecer os dados.
+Na Arquitetura Limpa, é responsabilidade da Camada de Dados ter uma ou várias implementações das interfaces do Domínio e vincular a interface à implementação real.
+
+Essa abstração com a interface e sua ligação é o princípio de Inversão de Dependência (D de SOLID) que é uma forma de desacoplar módulos.
+Módulos de alto nível não devem depender de módulos de baixo nível, ambos devem depender de abstrações.
+Em termos simples, isso significa adicionar / depender de interfaces para que possamos alternar facilmente a implementação e desacoplar nossos módulos de software.
+
+**Separação de interesses ou Princípio de Responsabilidade Única:**
+
+Aqui temos apenas 2 funcionalidades, portanto, de acordo com a regra S (de SOLID), vamos dividi-las e cada funcionalidade ser tratada por sua própria Classe.
+
+1. Então, digamos que temos GetFeeds, que será responsável por buscar os dados.
+2. E LikeFeed que será responsável por curtir os feeds.
+
+Simples, certo?
+Agora é fácil ir se a lógica exigir alguma alteração em sua funcionalidade.
+Agora, de acordo com as diretrizes da Arquitetura Limpa, eles são chamados de UseCases (círculo rosa no diagrama) .
+Portanto, temos 2 casos de uso aqui: **GetFeeds e LikeFeeds.**
+
+Portanto, essas implementações de Usecase são todas abstraídas e não dependem de nenhuma das camadas de Dados /Apresentação. Eles obtêm o resumo do DataLatey e sua implementação tem a lógica para obter/ curtir os feeds.
+Também no código, temos “GetFeedEntity” e “LikeFeedEntity”.
+Essas são as classes usadas para representar a estrutura de dados conforme o resultado depois que o DataLayer executa o caso de uso.
+
+Portanto, temos:
+**Caso de uso**: LikeFeed, GetFeeds
+**Entidades**: GetFeedEntity e LikeFeedEntity
+# Data
+
+Essa camada é responsável por buscar os dados. Isso pode ser local (DB), na memória (cache) ou na nuvem (REST).
+Para a parte GetFeed, podemos ter 2 separações:
+1. GetFeedsRemoteDataSource (verifica o cache ou então da nuvem)
+2. GetFeedsLocalDataSource (da fonte local, por exemplo, DB)
+Onde ambos fornecem a implementação para AbstractDataSource, que foi usado em DomainLayer.
+
+Portanto, as classes da camada de dados são responsáveis ​​por obter os dados. Ele pode ter várias implementações (para a regra S) e o chamador pode fornecer uma implementação específica para fazer seu trabalho de uma maneira diferente.
+
+**Estratégias de dados.**
+
+Múltiplas fontes de dados levam a diferentes estratégias de dados. Meu favorito é apenas retornar o Cache (fonte única de verdade) e atualizar o Cache do Remoto somente quando estiver vazio ou houver uma ação do usuário (deslize para atualizar, por exemplo). Isso economiza muitos dados e foi inspirado após a leitura do Build para o próximo bilhão de usuários de desenvolvedores Android.
+# Presenter
+Como o nome sugere, ele é responsável por mostrar os dados ao usuário.
+
+Então, como isso é feito? Tenho usado o padrão MVP para esta camada.
+
+Observe que o padrão MVP/MVC é apenas um padrão de apresentação, não o padrão de aplicativo. Embora possamos ter visto muitos aplicativos da web usando MVC/MVP para arquitetar o aplicativo inteiro, isso não é considerado uma abordagem correta. Use isso como um padrão de design e não como um padrão de arquitetura de aplicativo.
+
+ Observe que é a camada de apresentação que fornece as dependências, portanto, qualquer biblioteca externa, digamos que a biblioteca DI, é recomendada para uso apenas na camada de apresentação; outras camadas devem ser capazes de ser testadas independentemente.
 
 # SOLID
 
@@ -119,7 +229,52 @@ Depende de abstrações, não de concreções.
     B. As abstrações não devem depender de detalhes. Os detalhes devem depender de abstrações.
     Robert C. Martin
 
-Digamos que temos um sistema que lida com autenticação por meio de serviços externos, como Google, GitHub, etc. Teríamos uma classe para cada serviço: GoogleAuthenticationService , GitHubAuthenticationService, etc. Agora, digamos que em algum lugar em nosso sistema, precisamos autenticar nosso usuário. Para isso, conforme mencionado, temos diversos serviços disponíveis. Para poder usufruir de todos os serviços, temos duas possibilidades: Ou escrevemos um código que adapta cada serviço ao processo de autenticação ou definimos uma abstração dos serviços de autenticação. A primeira possibilidade é uma solução suja que potencialmente introduzirá dívida técnica no futuro; caso um novo serviço de autenticação deva ser integrado ao sistema, teremos que alterar o código, o que viola o OCP. A segunda possibilidade é muito mais limpa, permite a adição futura de serviços e as alterações podem ser feitas em cada serviço sem alterar a lógica de integração. Definindo um Com a interface AuthenticationService e implementando-a em cada serviço, poderíamos então usar a injeção de dependência em nossa lógica de autenticação e ter a assinatura do método de autenticação parecida com isto: authenticate (AuthenticationService authenticationService). Então, poderíamos autenticar por um serviço específico como este: authenticate (new GoogleAuthenticationService). Isso nos ajuda a generalizar a lógica de autenticação sem ter que integrar cada serviço separadamente.
+Digamos que temos um sistema que lida com autenticação por meio de serviços externos, como Google, GitHub, etc. Teríamos uma classe para cada serviço: GoogleAuthenticationService,GitHubAuthenticationService, etc. 
+
+Agora, digamos que em algum lugar em nosso sistema, precisamos autenticar nosso usuário. Para isso, conforme mencionado, temos diversos serviços disponíveis. Para poder usufruir de todos os serviços, temos duas possibilidades: Ou escrevemos um código que adapta cada serviço ao processo de autenticação ou definimos uma abstração dos serviços de autenticação. 
+
+A primeira possibilidade é uma solução suja que potencialmente introduzirá dívida técnica no futuro; caso um novo serviço de autenticação deva ser integrado ao sistema, teremos que alterar o código, o que viola o OCP. 
+
+A segunda possibilidade é muito mais limpa, permite a adição futura de serviços e as alterações podem ser feitas em cada serviço sem alterar a lógica de integração. 
+
+Definindo um Com a interface AuthenticationService e implementando-a em cada serviço, poderíamos então usar a injeção de dependência em nossa lógica de autenticação e ter a assinatura do método de autenticação parecida com isto: authenticate (AuthenticationService authenticationService). 
+
+Então, poderíamos autenticar por um serviço específico como este: authenticate (new GoogleAuthenticationService). Isso nos ajuda a generalizar a lógica de autenticação sem ter que integrar cada serviço separadamente.
 
 Ao depender de abstrações de nível superior, podemos facilmente alterar uma instância com outra instância para alterar o comportamento. Inversão de dependência aumenta a capacidade de reutilização e flexibilidade de nosso código.
 
+
+# TDD
+
+**Test Driven Development: TDD Simples e Prático**
+
+TDD é o Desenvolvimento Orientado por Testes (Test Driven Development). Isso mesmo! Desenvolvemos o nosso software baseado em testes que são escritos antes do nosso código de produção!
+
+Basicamente o TDD se baseia em pequenos ciclos de repetições, onde para cada funcionalidade do sistema um teste é criado antes. Este novo teste criado inicialmente falha, já que ainda não temos a implementação da funcionalidade em questão e, em seguida, implementamos a funcionalidade para fazer o teste passar! Simples assim!
+
+Calma! Não tão rápido pequeno samurai! Não podemos simplesmente escrever outro teste só por que já temos um teste passando. É preciso que esta funcionalidade que acabamos de escrever seja refatorada, ou seja, ela precisa passar por um pequeno banho de "boas práticas” de Desenvolvimento de Software. Estas boas práticas que garantirão um software com código mais limpo, coeso e menos acoplado.
+
+Ciclo de desenvolvimento
+Red,Green, Refactor. Ou seja:
+
+1. Escrevemos um Teste que inicialmente não passa (Red)
+2. Adicionamos uma nova funcionalidade do sistema
+3. Fazemos o Teste passar (Green)
+4. Refatoramos o código da nova funcionalidade (Refactoring)
+5. Escrevemos o próximo Teste
+
+Nós temos, neste tipo de estratégia, um feedback rápido sobre a nova funcionalidade e sobre uma possível quebra de outra funcionalidade do sistema. Assim tempos muito mais segurança para as refatorações e muito mais segurança na adição de novas funcionalidades.
+
+**Motivos para o uso**
+Temos diversos ganhos com esta estratégia e vou citar alguns:
+
+* Feedback rápido sobre a nova funcionalidade e sobre as outras funcionalidades existentes no sistema
+* Código mais limpo, já que escrevemos códigos simples para o teste passar
+* Segurança no Refactoring pois podemos ver o que estamos ou não afetando
+* Segurança na correção de bugs
+* Maior produtividade já que o desenvolvedor encontra menos bugs e não desperdiça tempo com depuradores
+* Código da aplicação mais flexível, já que para escrever testes temos que separar em pequenos "pedaços" o nosso código, para que sejam testáveis, ou seja, nosso código estará menos acoplado.
+
+
+
+[Reso](https://resocoder.com/flutter-clean-architecture-tdd/)
