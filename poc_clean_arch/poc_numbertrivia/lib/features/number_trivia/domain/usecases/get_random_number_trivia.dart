@@ -6,7 +6,7 @@ import 'package:poc_clean_arch/features/number_trivia/domain/repositories/number
 
 class GetRandomNumberTriviaUsecase
     implements UseCase<NumberTriviaEntity, NoParams> {
-  final NumberTriviaRepository repository;
+  final NumberTriviaRepositoryAbs repository;
 
   GetRandomNumberTriviaUsecase(this.repository);
 

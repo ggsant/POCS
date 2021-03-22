@@ -6,7 +6,7 @@ import 'package:poc_clean_arch/features/number_trivia/domain/repositories/number
 import 'package:poc_clean_arch/features/number_trivia/domain/usecases/get_concrete_number_trivia.dart';
 
 class MockNumberTriviaRepository extends Mock
-    implements NumberTriviaRepository {}
+    implements NumberTriviaRepositoryAbs {}
 
 void main() {
   GetConcreteNumberTriviaUsecase usecase;

@@ -8,7 +8,7 @@ import 'package:poc_clean_arch/features/number_trivia/domain/repositories/number
 
 class GetConcreteNumberTriviaUsecase
     implements UseCase<NumberTriviaEntity, Params> {
-  final NumberTriviaRepository repository;
+  final NumberTriviaRepositoryAbs repository;
   GetConcreteNumberTriviaUsecase(this.repository);
   @override
   Future<Either<Failure, NumberTriviaEntity>> call(Params params) async {
