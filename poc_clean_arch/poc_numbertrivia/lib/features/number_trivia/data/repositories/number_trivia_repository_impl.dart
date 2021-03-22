@@ -1,16 +1,17 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
-import 'package:poc_clean_arch/core/error/exception/exeptions.dart';
-import 'package:poc_clean_arch/core/error/failures/failures.dart';
-import 'package:poc_clean_arch/core/platform/network_info.dart';
-import 'package:poc_clean_arch/features/number_trivia/data/datasources/number_trivia_local_data_source.dart';
-import 'package:poc_clean_arch/features/number_trivia/data/datasources/number_trivia_remote_data_source.dart';
-import 'package:poc_clean_arch/features/number_trivia/domain/entities/number_trivia_entity.dart';
-import 'package:poc_clean_arch/features/number_trivia/domain/repositories/number_trivia_repository_abs.dart';
+import 'package:meta/meta.dart';
 
-typedef Future<NumberTriviaEntity> _ConcreteOrRandomChooser();
+import '../../../../core/error/failures.dart';
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/network/network_info.dart';
+import '../../domain/entities/number_trivia.dart';
+import '../../domain/repositories/number_trivia_repository.dart';
+import '../datasources/number_trivia_local_data_source.dart';
+import '../datasources/number_trivia_remote_data_source.dart';
 
-class NumberTriviaRepositoryImpl implements NumberTriviaRepositoryAbs {
+typedef Future<NumberTrivia> _ConcreteOrRandomChooser();
+
+class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
   final NumberTriviaRemoteDataSource remoteDataSource;
   final NumberTriviaLocalDataSource localDataSource;
   final NetworkInfo networkInfo;
@@ -22,7 +23,7 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepositoryAbs {
   });
 
   @override
-  Future<Either<Failure, NumberTriviaEntity>> getConcreteNumberTrivia(
+  Future<Either<Failure, NumberTrivia>> getConcreteNumberTrivia(
     int number,
   ) async {
     return await _getTrivia(() {
@@ -31,13 +32,13 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepositoryAbs {
   }
 
   @override
-  Future<Either<Failure, NumberTriviaEntity>> getRandomNumberTrivia() async {
+  Future<Either<Failure, NumberTrivia>> getRandomNumberTrivia() async {
     return await _getTrivia(() {
       return remoteDataSource.getRandomNumberTrivia();
     });
   }
 
-  Future<Either<Failure, NumberTriviaEntity>> _getTrivia(
+  Future<Either<Failure, NumberTrivia>> _getTrivia(
     _ConcreteOrRandomChooser getConcreteOrRandom,
   ) async {
     if (await networkInfo.isConnected) {

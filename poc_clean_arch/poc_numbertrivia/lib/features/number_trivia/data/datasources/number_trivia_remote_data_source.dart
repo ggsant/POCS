@@ -1,14 +1,10 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:poc_clean_arch/core/error/exception/exeptions.dart';
+import 'package:meta/meta.dart';
 
+import '../../../../core/error/exceptions.dart';
 import '../models/number_trivia_model.dart';
-
-// A interface pública de  NumberTriviaRemoteDataSource  será  quase  idêntica à do  Repositório  - terá os métodos  getConcreteNumberTrivia  e  getRandomNumberTrivia .
-
-//Estamos na fronteira entre o mundo exterior e nosso aplicativo, então queremos manter isso simples. Não haverá  Either <Failure, NumberTrivia> , mas em vez disso, vamos retornar apenas um NumberTriviaModel simples   (convertido de JSON). Os erros serão tratados lançando  exceções . Cuidar desses dados "burros" e convertê-los para o   tipo Qualquer será responsabilidade do  Repositório .
 
 abstract class NumberTriviaRemoteDataSource {
   /// Calls the http://numbersapi.com/{number} endpoint.
@@ -38,7 +34,9 @@ class NumberTriviaRemoteDataSourceImpl implements NumberTriviaRemoteDataSource {
   Future<NumberTriviaModel> _getTriviaFromUrl(String url) async {
     final response = await client.get(
       url,
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+      },
     );
 
     if (response.statusCode == 200) {

@@ -1,16 +1,14 @@
-import 'package:dartz/dartz.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
-import 'package:poc_clean_arch/core/error/exception/exeptions.dart';
-import 'package:poc_clean_arch/core/error/failures/failures.dart';
-import 'package:poc_clean_arch/core/platform/network_info.dart';
+import 'package:poc_clean_arch/core/error/exceptions.dart';
+import 'package:poc_clean_arch/core/error/failures.dart';
+import 'package:poc_clean_arch/core/network/network_info.dart';
 import 'package:poc_clean_arch/features/number_trivia/data/datasources/number_trivia_local_data_source.dart';
 import 'package:poc_clean_arch/features/number_trivia/data/datasources/number_trivia_remote_data_source.dart';
 import 'package:poc_clean_arch/features/number_trivia/data/models/number_trivia_model.dart';
 import 'package:poc_clean_arch/features/number_trivia/data/repositories/number_trivia_repository_impl.dart';
-import 'package:poc_clean_arch/features/number_trivia/domain/entities/number_trivia_entity.dart';
-
-//Sabemos que o  Repositório deve  incluir as Fontes de Dados locais e  remotas  e também um  objeto NetworkInfo . Como estamos preparando o arquivo de teste para a próxima parte, vamos criar Mock s para essas dependências imediatamente.
+import 'package:poc_clean_arch/features/number_trivia/domain/entities/number_trivia.dart';
+import 'package:dartz/dartz.dart';
+import 'package:mockito/mockito.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 class MockRemoteDataSource extends Mock
     implements NumberTriviaRemoteDataSource {}
@@ -60,7 +58,7 @@ void main() {
     final tNumber = 1;
     final tNumberTriviaModel =
         NumberTriviaModel(number: tNumber, text: 'test trivia');
-    final NumberTriviaEntity tNumberTrivia = tNumberTriviaModel;
+    final NumberTrivia tNumberTrivia = tNumberTriviaModel;
 
     test(
       'should check if the device is online',
@@ -155,7 +153,7 @@ void main() {
   group('getRandomNumberTrivia', () {
     final tNumberTriviaModel =
         NumberTriviaModel(number: 123, text: 'test trivia');
-    final NumberTriviaEntity tNumberTrivia = tNumberTriviaModel;
+    final NumberTrivia tNumberTrivia = tNumberTriviaModel;
 
     test(
       'should check if the device is online',
