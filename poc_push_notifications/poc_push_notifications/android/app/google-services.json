@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:94974524565:android:44dda5adc9df93771eef9c",
+        "mobilesdk_app_id": "1:94974524565:android:f86461d3c3528f801eef9c",
         "android_client_info": {
-          "package_name": "com.example.puc_push_notifications"
+          "package_name": "com.example.poc_push_notifications"
         }
       },
       "oauth_client": [
