@@ -1,16 +1,6 @@
-# poc_google_maps
+# Flutter do Google Maps: marcador, círculo e polígono.
 
-A new Flutter project.
+Hoje, oferecer serviços relacionados à localização tornou-se quase fundamental quando se trata de aplicativos móveis. E, felizmente, temos o Google Maps ao nosso lado, que cria experiências de localização envolventes e nos ajuda a tomar as melhores decisões de negócios com informações precisas em tempo real.
 
-## Getting Started
+Desenvolvimento rápido, interface expressiva e flexível e desempenho nativo, fizeram do Flutter uma das principais e mais populares ferramentas para o desenvolvimento de aplicativos multiplataforma. Agora, vamos falar sobre o uso do plug-in: google_maps_flutter e como usá-lo.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
