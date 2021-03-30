@@ -100,15 +100,16 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.deepPurpleAccent,
       appBar: AppBar(
-        title: Text('Notify'),
+        title: Text('Poc Push Notifications'),
         brightness: Brightness.dark,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'App for capturing Firebase Push Notifications',
+            'App para demonstrar as notificações com o Firebase',
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.black,

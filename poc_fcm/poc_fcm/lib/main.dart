@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return OverlaySupport(
       child: MaterialApp(
-        title: 'Notify',
+        title: 'Poc push notifications',
         theme: ThemeData(
           primarySwatch: Colors.deepPurple,
         ),
