@@ -12,6 +12,31 @@ class _PageOneState extends State<PageOne> {
   final TextEditingController _controladorNome = TextEditingController();
   final TextEditingController _controladorIdade = TextEditingController();
 
+  void _onBackPressed(BuildContext context) {
+    AppState.of(context).logEvent(
+      EventType.BUTTON_PRESSED,
+      'PageOne._onBackPressed',
+    );
+
+    Navigator.of(context).pop();
+  }
+
+  void _onRegisterPressed(BuildContext context) {
+    final String nome = _controladorNome.text;
+    final int quantidade = int.tryParse(_controladorIdade.text);
+    final Person newPerson = Person(nome, quantidade);
+    print(newPerson);
+
+    AppState.of(context).logEvent(
+      EventType.BUTTON_PRESSED,
+      'PageOne._onRegisterPressed',
+    );
+
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return PageTwo();
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,17 +44,7 @@ class _PageOneState extends State<PageOne> {
         title: Text('Pagina 01 do fluxo'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            AppState.of(context)
-              ..analytics.logEvent(
-                'Pressed Button',
-                eventProperties: {
-                  'button_id': 'Page01 - voltar',
-                  'time_page01': DateTime.now().toString()
-                },
-              )
-              ..log('Update event - Page01 - voltar');
-          },
+          onPressed: () => _onBackPressed(context),
         ),
       ),
       body: Padding(
@@ -50,30 +65,7 @@ class _PageOneState extends State<PageOne> {
               child: RaisedButton(
                 color: Colors.pink,
                 child: Text('Cadastrar', style: TextStyle(color: Colors.white)),
-                onPressed: () {
-                  final String nome = _controladorNome.text;
-                  final int quantidade = int.tryParse(_controladorIdade.text);
-
-                  final Person newPerson = Person(nome, quantidade);
-                  print(newPerson);
-
-                  AppState.of(context)
-                    ..analytics.logEvent(
-                      'Pressed Button',
-                      eventProperties: {
-                        'button_id': 'Page01 - Cadastro',
-                        'time_page01': DateTime.now().toString()
-                      },
-                    )
-                    ..log('Update event - Page01');
-
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => PageTwo(),
-                    ),
-                  );
-                },
+                onPressed: () => _onRegisterPressed(context),
               ),
             ),
           ],

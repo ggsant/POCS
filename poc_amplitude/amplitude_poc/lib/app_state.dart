@@ -1,5 +1,14 @@
 import 'package:amplitude_flutter/amplitude.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+enum EventType {
+  BUTTON_PRESSED,
+}
+
+extension EventTypeExtension on EventType {
+  String get enumString => describeEnum(this);
+}
 
 class AppState extends InheritedWidget {
   final Amplitude analytics;
@@ -13,6 +22,27 @@ class AppState extends InheritedWidget {
 
   void log(String message) {
     print(message);
+  }
+
+  Future<void> logEvent(
+    EventType eventType,
+    String caller, {
+    bool outOfSession,
+    String message,
+  }) async {
+    await analytics.logEvent(
+      eventType.enumString,
+      eventProperties: {'page': caller},
+      outOfSession: outOfSession,
+    );
+
+    String logMessage = '${eventType.enumString}:$caller';
+
+    if (message != null) {
+      logMessage += ': ';
+      logMessage += message;
+    }
+    log(logMessage);
   }
 
   Future<void> uploadEvents() async {
