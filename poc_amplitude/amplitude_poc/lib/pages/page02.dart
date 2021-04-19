@@ -1,9 +1,3 @@
-import 'package:amplitude_poc/pages/page03.dart';
-import 'package:amplitude_poc/pages/page04.dart';
-import 'package:amplitude_poc/pages/page05.dart';
-import 'package:amplitude_poc/pages/page06.dart';
-import 'package:amplitude_poc/pages/page07.dart';
-import 'package:amplitude_poc/pages/page08.dart';
 import 'package:flutter/material.dart';
 
 import '../app_state.dart';
@@ -14,184 +8,64 @@ class PageTwo extends StatefulWidget {
 }
 
 class _PageTwoState extends State<PageTwo> {
+  static const List<Color> colors = [
+    Colors.red,
+    Colors.pink,
+    Colors.purple,
+    Colors.indigo,
+    Colors.cyan,
+    Colors.teal,
+    Colors.green,
+  ];
+
+  void _onButtonPressed(BuildContext context, String buttonId, Color color) {
+    AppState.of(context).logEvent(
+      EventType.BUTTON_PRESSED,
+      'PageTwo._onButtonPressed',
+      message: '$buttonId',
+    );
+
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return ColoredPage(color: color);
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Pagina 02 do fluxo')),
+      appBar: AppBar(title: Text('Página 02 do fluxo')),
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            RaisedButton.icon(
-              onPressed: () {
-                AppState.of(context)
-                  ..analytics.logEvent(
-                    'Pressed Button',
-                    eventProperties: {
-                      'button_id': 'Botão 01',
-                      'time_page01': DateTime.now().toString()
-                    },
-                  )
-                  ..log('Update event - Page02');
-
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => PageTree(),
-                  ),
-                );
-              },
+          children: List.generate(colors.length, (index) {
+            return RaisedButton.icon(
+              color: colors[index],
               icon: Icon(Icons.adb_rounded, color: Colors.white),
-              label: Text('Botão 01', style: TextStyle(color: Colors.white)),
-              color: Colors.pink,
-            ),
-            RaisedButton.icon(
               onPressed: () {
-                AppState.of(context)
-                  ..analytics.logEvent(
-                    'Pressed Button',
-                    eventProperties: {
-                      'button_id': 'Botão 02',
-                      'time_page01': DateTime.now().toString()
-                    },
-                  )
-                  ..log('Update event - Page02');
-
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => PageFour(),
-                  ),
-                );
+                _onButtonPressed(context, 'button-${index + 1}', colors[index]);
               },
-              icon: Icon(Icons.adb_rounded, color: Colors.white),
-              label: Text('Botão 02', style: TextStyle(color: Colors.white)),
-              color: Colors.pink,
-            ),
-            RaisedButton.icon(
-              onPressed: () {
-                AppState.of(context)
-                  ..analytics.logEvent(
-                    'Pressed Button',
-                    eventProperties: {
-                      'button_id': 'Botão 03',
-                      'time_page01': DateTime.now().toString()
-                    },
-                  )
-                  ..log('Update event - Page02');
-
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => PageFive(),
-                  ),
-                );
-              },
-              icon: Icon(Icons.adb_rounded, color: Colors.white),
-              label: Text('Botão 04', style: TextStyle(color: Colors.white)),
-              color: Colors.deepOrange,
-            ),
-            RaisedButton.icon(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => PageEigth(),
-                  ),
-                );
-              },
-              icon: Icon(Icons.adb_rounded, color: Colors.white),
-              label: Text('Botão 04', style: TextStyle(color: Colors.white)),
-              color: Colors.lightBlueAccent,
-            ),
-            RaisedButton.icon(
-              onPressed: () {
-                AppState.of(context)
-                  ..analytics.logEvent(
-                    'Pressed Button',
-                    eventProperties: {
-                      'button_id': 'Botão 05',
-                      'time_page01': DateTime.now().toString()
-                    },
-                  )
-                  ..log('Update event - Page02');
-
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => PageSix(),
-                  ),
-                );
-              },
-              icon: Icon(Icons.adb_rounded, color: Colors.white),
-              label: Text('Botão 05', style: TextStyle(color: Colors.white)),
-              color: Colors.indigoAccent,
-            ),
-            RaisedButton.icon(
-              onPressed: () {
-                AppState.of(context)
-                  ..analytics.logEvent(
-                    'Pressed Button',
-                    eventProperties: {
-                      'button_id': 'Botão 06',
-                      'time_page01': DateTime.now().toString()
-                    },
-                  )
-                  ..log('Update event - Page02');
-
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => PageSeven(),
-                  ),
-                );
-              },
-              icon: Icon(Icons.adb_rounded, color: Colors.white),
-              label: Text('Botão 06', style: TextStyle(color: Colors.white)),
-              color: Colors.cyan,
-            ),
-            RaisedButton.icon(
-              onPressed: () {
-                AppState.of(context)
-                  ..analytics.logEvent(
-                    'Pressed Button',
-                    eventProperties: {
-                      'button_id': 'Botão 01',
-                      'time_page01': DateTime.now().toString()
-                    },
-                  )
-                  ..log('Update event - Page07');
-
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => PageEigth(),
-                  ),
-                );
-              },
-              icon: Icon(Icons.adb_rounded, color: Colors.white),
-              label: Text('Finalizar', style: TextStyle(color: Colors.black)),
-              color: Colors.yellow,
-            ),
-          ],
+              label: Text(
+                'Botão 0${index + 1}',
+                style: TextStyle(color: Colors.white),
+              ),
+            );
+          }),
         ),
       ),
     );
   }
 }
 
-class Person {
-  final String nome;
-  final int quantidade;
+class ColoredPage extends StatelessWidget {
+  const ColoredPage({Key key, this.color}) : super(key: key);
 
-  Person(
-    this.nome,
-    this.quantidade,
-  );
+  final Color color;
 
   @override
-  String toString() {
-    return 'Person{nome: $nome, quantidade: $quantidade,}';
+  Widget build(BuildContext context) {
+    return Container(
+      color: color,
+    );
   }
 }
