@@ -3,7 +3,7 @@ import 'package:amplitude_poc/api_key.dart';
 import 'package:amplitude_poc/app_state.dart';
 import 'package:flutter/material.dart';
 
-import 'pages/homepage.dart';
+import 'pages/home_page.dart';
 
 class PocAmplitude extends StatefulWidget {
   @override
