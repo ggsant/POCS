@@ -21,8 +21,8 @@ class _PageTwoState extends State<PageTwo> {
   void _onButtonPressed(BuildContext context, String buttonId, Color color) {
     AppState.of(context).logEvent(
       EventType.BUTTON_PRESSED,
-      'PageTwo._onButtonPressed',
-      message: '$buttonId',
+      buttonId,
+      message: buttonId,
     );
 
     Navigator.push(context, MaterialPageRoute(builder: (_) {

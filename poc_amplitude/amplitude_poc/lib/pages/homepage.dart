@@ -34,3 +34,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+
+AmplitudeState.of(context).logEvent(
+      ActionType.NAVIGATION,
+      'navbar-requests',
+    );
+    print(
+        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa------------------------------------');
