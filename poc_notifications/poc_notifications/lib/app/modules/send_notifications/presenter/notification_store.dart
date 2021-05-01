@@ -4,17 +4,22 @@ import 'package:poc_notifications/app/modules/send_notifications/domain/errors/n
 import 'package:poc_notifications/app/modules/send_notifications/domain/models/notification_params.dart';
 import 'package:poc_notifications/app/modules/send_notifications/domain/usecase/send_notification_usecase.dart';
 
-class NotificationStore
-    extends NotifierStore<NotificationsFailures, NotificationResult> {
+class NotificationStore extends NotifierStore<NotificationsFailures, NotificationResult> {
   final SendNotificationUseCase sendNotificationsUsecase;
+  final String appId = 'qualquercoisa';
+  final String token = 'batata';
 
-  NotificationStore(this.sendNotificationsUsecase)
-      : super(NotificationResultEmpty());
+  NotificationStore(this.sendNotificationsUsecase) : super(NotificationResultEmpty());
 
   void sendNotifications(String title, String body) {
     executeEither(
       () => sendNotificationsUsecase(
-        NotificationParams(body: body, title: title),
+        NotificationParams(
+          body: body,
+          title: title,
+          appId: appId,
+          token: token,
+        ),
       ),
     );
   }

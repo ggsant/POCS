@@ -12,15 +12,14 @@ class SendNotificationRepositoryImpl implements SendNotificationRepository {
   SendNotificationRepositoryImpl(this.dataSouce);
 
   @override
-  Future<Either<NotificationsFailures, NotificationResult>> sendNotifications(
-      NotificationParams params) async {
+  Future<Either<NotificationsFailures, NotificationResult>> sendNotifications(NotificationParams params) async {
     try {
-      final notifications = await dataSouce.sendNotifications();
+      final notifications = await dataSouce.sendNotifications(params);
       return Right(notifications);
     } on DioError catch (e) {
       return Left(DataSourceFailure(e.message));
-    } catch (e) {
-      return Left(UnknownFailure(e.toString()));
+    } on NotificationsFailures catch (e) {
+      return Left(e);
     }
   }
 }

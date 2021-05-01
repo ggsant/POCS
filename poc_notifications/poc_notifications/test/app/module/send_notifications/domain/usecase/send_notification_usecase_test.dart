@@ -6,8 +6,7 @@ import 'package:poc_notifications/app/modules/send_notifications/domain/models/n
 import 'package:poc_notifications/app/modules/send_notifications/domain/repositories/send_notification_repository.dart';
 import 'package:poc_notifications/app/modules/send_notifications/domain/usecase/send_notification_usecase.dart';
 
-class MockSendNotificationRepository extends Mock
-    implements SendNotificationRepository {}
+class MockSendNotificationRepository extends Mock implements SendNotificationRepository {}
 
 void main() {
   late MockSendNotificationRepository repository;
@@ -18,17 +17,13 @@ void main() {
   });
 
   group('SendNotificaionUseCaseImpl', () {
+    //todo: testar validação
     test('Should send Notifications', () async {
       //?act
       final response = await usecase(NotificationParamsEmpty());
       //!assert
       expect(response.isRight(), true);
-      expect(
-        response,
-        Right(
-          const NotificationResult('Nenhum parâmetro foi especificado.'),
-        ),
-      );
+      expect(response, Right(const NotificationResult('Nenhum parâmetro foi especificado.')));
     });
   });
 }

@@ -1,20 +1,17 @@
 class NotificationParams {
   final String title;
   final String body;
+  final String appId;
+  final String token;
 
-  const NotificationParams({required this.title, required this.body});
-
-  NotificationParams copyWith({
-    String? title,
-    String? body,
-  }) {
-    return NotificationParams(
-      title: title ?? this.title,
-      body: body ?? this.body,
-    );
-  }
+  const NotificationParams({
+    required this.title,
+    required this.body,
+    required this.appId,
+    required this.token,
+  });
 }
 
 class NotificationParamsEmpty extends NotificationParams {
-  const NotificationParamsEmpty() : super(title: '', body: '');
+  const NotificationParamsEmpty() : super(title: '', body: '', appId: '', token: '');
 }
