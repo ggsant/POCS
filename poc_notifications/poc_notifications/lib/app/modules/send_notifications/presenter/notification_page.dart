@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:poc_notifications/app/modules/send_notifications/domain/entities/notification_result.dart';
 
 class NotificationPage extends StatefulWidget {
   NotificationPage({Key? key}) : super(key: key);
@@ -8,6 +9,8 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<NotificationPage> {
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _bodyController = TextEditingController();
   final Color color = Color.fromRGBO(229, 75, 77, 1);
   Widget _buildPageContent(BuildContext context) {
     return Container(
@@ -47,6 +50,7 @@ class _NotificationPageState extends State<NotificationPage> {
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 20.0),
                     child: TextField(
+                      controller: _titleController,
                       style: TextStyle(color: Colors.blue),
                       decoration: InputDecoration(
                         hintText: "Titulo da notificação:",
@@ -68,15 +72,17 @@ class _NotificationPageState extends State<NotificationPage> {
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 20.0),
                     child: TextField(
+                      controller: _bodyController,
                       style: TextStyle(color: Colors.blue),
                       decoration: InputDecoration(
-                          hintText: "Conteudo da notificação",
-                          hintStyle: TextStyle(color: color),
-                          border: InputBorder.none,
-                          icon: Icon(
-                            Icons.content_copy,
-                            color: color,
-                          )),
+                        hintText: "Conteudo da notificação",
+                        hintStyle: TextStyle(color: color),
+                        border: InputBorder.none,
+                        icon: Icon(
+                          Icons.content_copy,
+                          color: color,
+                        ),
+                      ),
                     ),
                   ),
                   Container(
@@ -94,7 +100,12 @@ class _NotificationPageState extends State<NotificationPage> {
             child: Align(
               alignment: Alignment.bottomCenter,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  final String title = _titleController.text;
+                  final String body = _bodyController.text;
+                  final NotificationResult newNotification = NotificationResult('title: $title | body: $body');
+                  print(newNotification.message);
+                },
                 child: Text("Enviar notificação", style: TextStyle(color: Colors.white)),
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.red),
