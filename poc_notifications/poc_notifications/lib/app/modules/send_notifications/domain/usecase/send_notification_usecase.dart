@@ -20,7 +20,7 @@ class SendNotificationUseCaseImpl implements SendNotificationUseCase {
     }
 
     if (params.title.isEmpty) {
-      return Left(const ValidationFailure('Titulo não pode ser vazio.'));
+      return Left(const ValidationFailure('O titulo não pode ser vazio.'));
     }
     if (params.body.isEmpty) {
       return Left(const ValidationFailure('O body não pode ser vazio.'));

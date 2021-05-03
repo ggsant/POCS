@@ -42,7 +42,7 @@ void main() {
       verify(() => client.post(any(), data: any(named: 'data'), options: any(named: 'options'))).called(1);
     });
 
-    test('Should return an error of DataSourceFailure ', () async {
+    test('should return a DataSourceFailure when the sendNotifications call to client is unsucessful ', () async {
       //*arrange
       when(
         () => client.post(any(), data: any(named: 'data'), options: any(named: 'options')),
