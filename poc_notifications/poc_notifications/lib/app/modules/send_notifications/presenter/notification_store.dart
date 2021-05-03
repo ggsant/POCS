@@ -1,4 +1,5 @@
 import 'package:flutter_triple/flutter_triple.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:poc_notifications/app/modules/send_notifications/domain/entities/notification_result.dart';
 import 'package:poc_notifications/app/modules/send_notifications/domain/errors/notifications_failures/notifications_failures.dart';
 import 'package:poc_notifications/app/modules/send_notifications/domain/models/notification_params.dart';
@@ -6,10 +7,12 @@ import 'package:poc_notifications/app/modules/send_notifications/domain/usecase/
 
 import '../../../../api_one_signal.dart';
 
-class NotificationStore extends NotifierStore<NotificationsFailures, NotificationResult> {
+class NotificationStore
+    extends NotifierStore<NotificationsFailures, NotificationResult> {
   final SendNotificationUseCase sendNotificationsUsecase;
 
-  NotificationStore(this.sendNotificationsUsecase) : super(NotificationResultEmpty());
+  NotificationStore(this.sendNotificationsUsecase)
+      : super(NotificationResultEmpty());
 
   void sendNotifications(String title, String body) {
     executeEither(
@@ -22,5 +25,19 @@ class NotificationStore extends NotifierStore<NotificationsFailures, Notificatio
         ),
       ),
     );
+  }
+
+  void initOneSignal() async {
+    await OneSignal.shared.setAppId(appId);
+  }
+
+  // para enviar notifiaçõs para usuários especificos nós devemos ter o id do usuário, que é recuperado na função abaixo
+
+  Future setExternalUserId(String externalid) {
+    return OneSignal.shared.setExternalUserId(externalid);
+  }
+
+  Future removeExternalUserId(String externalid) {
+    return OneSignal.shared.setExternalUserId(externalid);
   }
 }

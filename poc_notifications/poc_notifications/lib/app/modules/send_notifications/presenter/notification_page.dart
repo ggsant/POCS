@@ -18,6 +18,12 @@ class _NotificationPageState extends ModularState<NotificationPage, Notification
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _bodyController = TextEditingController();
 
+  @override
+  void initState() {
+    super.initState();
+    controller.initOneSignal();
+  }
+
   Widget _buildError(NotificationsFailures error) {
     if (error is DataSourceFailure) {
       return Center(
