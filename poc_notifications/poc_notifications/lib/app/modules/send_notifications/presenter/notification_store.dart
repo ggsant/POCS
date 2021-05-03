@@ -6,7 +6,7 @@ import 'package:poc_notifications/app/modules/send_notifications/domain/usecase/
 
 class NotificationStore extends NotifierStore<NotificationsFailures, NotificationResult> {
   final SendNotificationUseCase sendNotificationsUsecase;
-  final String appId = 'qualquercoisa';
+  final String appId = '4b743770-c3fb-4e15-9ab2-e3052aa64e46';
   final String token = 'batata';
 
   NotificationStore(this.sendNotificationsUsecase) : super(NotificationResultEmpty());
