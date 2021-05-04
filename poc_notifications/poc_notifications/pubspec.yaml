@@ -28,6 +28,7 @@ dependencies:
 
 dev_dependencies:
   flutter_modular_test: ^1.0.1
+  build_runner: ^2.0.2
   flutter_test:
     sdk: flutter
   triple_test: ^0.0.5

@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:poc_notifications/app/modules/send_notifications/domain/models/notification_params.dart';
-import 'package:poc_notifications/app/modules/send_notifications/domain/repositories/send_notification_repository.dart';
+import '../models/notification_params.dart';
+import '../repositories/send_notification_repository.dart';
 import '../entities/notification_result.dart';
 import '../errors/notifications_failures/notifications_failures.dart';
 

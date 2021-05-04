@@ -1,10 +1,10 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:poc_notifications/app/modules/send_notifications/domain/usecase/send_notification_usecase.dart';
-import 'package:poc_notifications/app/modules/send_notifications/external/datasource/send_notification_datasource_impl.dart';
-import 'package:poc_notifications/app/modules/send_notifications/infra/datasource/send_notification.dart';
-import 'package:poc_notifications/app/modules/send_notifications/infra/repositories/send_notifications_repository.dart';
-import 'package:poc_notifications/app/modules/send_notifications/presenter/notification_page.dart';
-import 'package:poc_notifications/app/modules/send_notifications/presenter/notification_store.dart';
+import 'domain/usecase/send_notification_usecase.dart';
+import 'external/datasource/send_notification_datasource_impl.dart';
+import 'infra/datasource/send_notification.dart';
+import 'infra/repositories/send_notifications_repository.dart';
+import 'presenter/notification_page.dart';
+import 'presenter/notification_store.dart';
 
 import 'domain/repositories/send_notification_repository.dart';
 

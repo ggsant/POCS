@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:poc_notifications/app/modules/send_notifications/domain/repositories/credential_repository.dart';
+import '../repositories/credential_repository.dart';
 import '../entities/credentials_result.dart';
 import '../errors/credentials_failures/credential_failures.dart';
 

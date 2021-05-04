@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:poc_notifications/app/modules/send_notifications/domain/entities/notification_result.dart';
-import 'package:poc_notifications/app/modules/send_notifications/domain/errors/notifications_failures/notifications_failures.dart';
-import 'package:poc_notifications/app/modules/send_notifications/infra/datasource/send_notification.dart';
+import '../../domain/entities/notification_result.dart';
+import '../../domain/errors/notifications_failures/notifications_failures.dart';
+import '../../infra/datasource/send_notification.dart';
 
 class SendNotificationDataSouceImpl implements SendNotificationDataSouce {
   final Dio client;

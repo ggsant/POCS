@@ -1,5 +1,5 @@
-import 'package:poc_notifications/app/modules/send_notifications/domain/entities/credentials_result.dart';
-import 'package:poc_notifications/app/modules/send_notifications/infra/datasource/hive_datasource.dart';
+import '../../domain/entities/credentials_result.dart';
+import '../../infra/datasource/hive_datasource.dart';
 
 enum Credential {
   INSERT,

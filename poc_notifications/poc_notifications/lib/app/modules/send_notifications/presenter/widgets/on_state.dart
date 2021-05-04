@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:poc_notifications/app/modules/send_notifications/domain/entities/notification_result.dart';
+import '../../domain/entities/notification_result.dart';
 
 class OnStatePage extends StatelessWidget {
   final TextEditingController? titleController;

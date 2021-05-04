@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:poc_notifications/app/modules/send_notifications/domain/entities/notification_result.dart';
-import 'package:poc_notifications/app/modules/send_notifications/domain/errors/notifications_failures/notifications_failures.dart';
-import 'package:poc_notifications/app/modules/send_notifications/presenter/widgets/on_state.dart';
+import '../domain/entities/notification_result.dart';
+import '../domain/errors/notifications_failures/notifications_failures.dart';
+import 'widgets/on_state.dart';
 
 import 'notification_store.dart';
 
