@@ -25,4 +25,10 @@ class HiveDataSouceImpl implements HiveDataSouce {
     // TODO: implement saveCredential
     throw UnimplementedError();
   }
+
+  @override
+  Future<CredentialResult> updateCredential(CredentialResult params) {
+    // TODO: implement updateCredential
+    throw UnimplementedError();
+  }
 }

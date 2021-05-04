@@ -9,4 +9,6 @@ abstract class CredentialRepository {
       CredentialResult params);
   Future<Either<CredentialFailures, CredentialResult>> deleteCredential(
       CredentialResult params);
+  Future<Either<CredentialFailures, CredentialResult>> updateCredential(
+      CredentialResult params);
 }

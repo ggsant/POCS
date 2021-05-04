@@ -106,5 +106,35 @@ void main() {
       verify(() => datasource.deleteCredential(const CredentialResultEmpty()))
           .called(1);
     });
+
+    test(
+        'Should return CredentialResult when updateCredential calls the datasource ',
+        () async {
+      //*arrange
+      when(() => datasource.updateCredential(const CredentialResultEmpty()))
+          .thenAnswer((_) async => tNotificationModel);
+      //?act
+      final response =
+          await repository.updateCredential(const CredentialResultEmpty());
+      //!assert
+      expect(response.isRight(), true);
+      expect(response, Right(tNotificationModel));
+      verify(() => datasource.updateCredential(const CredentialResultEmpty()))
+          .called(1);
+    });
+    test(
+        'should return a DataSourceFailure when the updateCredential call to datasource is unsucessful',
+        () async {
+      //*arrange
+      when(() => datasource.updateCredential(const CredentialResultEmpty()))
+          .thenThrow(DataSourceCredentialFailure(''));
+      //?act
+      final response =
+          await repository.updateCredential(const CredentialResultEmpty());
+      //!assert
+      expect(response.fold(id, id), isA<DataSourceCredentialFailure>());
+      verify(() => datasource.updateCredential(const CredentialResultEmpty()))
+          .called(1);
+    });
   });
 }

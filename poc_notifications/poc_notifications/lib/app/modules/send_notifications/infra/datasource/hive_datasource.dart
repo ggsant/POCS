@@ -4,4 +4,5 @@ abstract class HiveDataSouce {
   Future<CredentialResult> saveCredential(CredentialResult params);
   Future<CredentialResult> fetchCredential(CredentialResult params);
   Future<CredentialResult> deleteCredential(CredentialResult params);
+  Future<CredentialResult> updateCredential(CredentialResult params);
 }

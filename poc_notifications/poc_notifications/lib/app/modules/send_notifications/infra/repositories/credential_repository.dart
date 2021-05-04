@@ -40,4 +40,15 @@ class CredentialRepositoryImpl implements CredentialRepository {
       return Left(e);
     }
   }
+
+  @override
+  Future<Either<CredentialFailures, CredentialResult>> updateCredential(
+      CredentialResult params) async {
+    try {
+      final credential = await dataSouce.updateCredential(params);
+      return Right(credential);
+    } on CredentialFailures catch (e) {
+      return Left(e);
+    }
+  }
 }
