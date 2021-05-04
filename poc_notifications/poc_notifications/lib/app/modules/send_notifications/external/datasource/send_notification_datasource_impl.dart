@@ -30,7 +30,8 @@ class SendNotificationDataSouceImpl implements SendNotificationDataSouce {
       return const NotificationResult('Ok!');
     } else {
       throw const DataSourceNotificationFailure(
-          'Ocorreu um erro no datasource');
+        'Ocorreu um erro no datasource',
+      );
     }
   }
 }

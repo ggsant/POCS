@@ -6,7 +6,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:poc_notifications/app/modules/send_notifications/domain/entities/notification_result.dart';
 import 'package:poc_notifications/app/modules/send_notifications/domain/errors/notifications_failures/notifications_failures.dart';
 import 'package:poc_notifications/app/modules/send_notifications/domain/models/notification_params.dart';
-import 'package:poc_notifications/app/modules/send_notifications/external/datasource/send_notification_impl.dart';
+import 'package:poc_notifications/app/modules/send_notifications/external/datasource/send_notification_datasource_impl.dart';
 
 class MockDio extends Mock implements Dio {}
 
@@ -31,28 +31,43 @@ void main() {
   };
 
   group('SendNotificationDataSouceImpl', () {
-    test('Should call the sendNotifications method and retur the NotificationResult', () async {
+    test(
+        'Should call the sendNotifications method and retur the NotificationResult',
+        () async {
       when(
-        () => client.post(any(), data: any(named: 'data'), options: any(named: 'options')),
-      ).thenAnswer((_) async => Response(requestOptions: _requestOptionsMock, statusCode: HttpStatus.ok, data: tData));
+        () => client.post(any(),
+            data: any(named: 'data'), options: any(named: 'options')),
+      ).thenAnswer((_) async => Response(
+          requestOptions: _requestOptionsMock,
+          statusCode: HttpStatus.ok,
+          data: tData));
 
-      final response = await datasource.sendNotifications(NotificationParamsEmpty());
+      final response =
+          await datasource.sendNotifications(NotificationParamsEmpty());
 
       expect(response, isA<NotificationResult>());
-      verify(() => client.post(any(), data: any(named: 'data'), options: any(named: 'options'))).called(1);
+      verify(() => client.post(any(),
+          data: any(named: 'data'), options: any(named: 'options'))).called(1);
     });
 
-    test('should return a DataSourceFailure when the sendNotifications call to client is unsucessful ', () async {
+    test(
+        'should return a DataSourceFailure when the sendNotifications call to client is unsucessful ',
+        () async {
       //*arrange
       when(
-        () => client.post(any(), data: any(named: 'data'), options: any(named: 'options')),
-      ).thenAnswer((_) async => Response(requestOptions: _requestOptionsMock, statusCode: HttpStatus.badRequest, data: tData));
+        () => client.post(any(),
+            data: any(named: 'data'), options: any(named: 'options')),
+      ).thenAnswer((_) async => Response(
+          requestOptions: _requestOptionsMock,
+          statusCode: HttpStatus.badRequest,
+          data: tData));
       //?act
       final response = datasource.sendNotifications(NotificationParamsEmpty());
       //!assert
       //erro capcioso colocar () => quando for testar erro
       expect(() => response, throwsA(isA<DataSourceNotificationFailure>()));
-      verify(() => client.post(any(), data: any(named: 'data'), options: any(named: 'options'))).called(1);
+      verify(() => client.post(any(),
+          data: any(named: 'data'), options: any(named: 'options'))).called(1);
     });
   });
 }

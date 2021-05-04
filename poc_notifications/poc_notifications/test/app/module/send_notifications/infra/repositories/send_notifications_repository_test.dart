@@ -5,7 +5,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:poc_notifications/app/modules/send_notifications/domain/entities/notification_result.dart';
 import 'package:poc_notifications/app/modules/send_notifications/domain/errors/notifications_failures/notifications_failures.dart';
 import 'package:poc_notifications/app/modules/send_notifications/domain/models/notification_params.dart';
-import 'package:poc_notifications/app/modules/send_notifications/external/datasource/send_notification_impl.dart';
+import 'package:poc_notifications/app/modules/send_notifications/external/datasource/send_notification_datasource_impl.dart';
 import 'package:poc_notifications/app/modules/send_notifications/infra/repositories/send_notifications_repository.dart';
 
 class SendNotificationDataSouceImplMock extends Mock
