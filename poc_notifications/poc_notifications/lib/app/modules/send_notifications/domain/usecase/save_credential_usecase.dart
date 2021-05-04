@@ -17,6 +17,7 @@ class SaveCredentialsUseCaseImpl implements SaveCredentialsUseCase {
       CredentialResult params) async {
     if (params is CredentialResultEmpty) {
       return Right(const CredentialResult(
+        'Nenhum parâmetro foi especificado para o id.',
         'Nenhum parâmetro foi especificado para o titulo.',
         'Nenhum parâmetro foi especificado para o appId.',
         'Nenhum parâmetro foi especificado para o token.',

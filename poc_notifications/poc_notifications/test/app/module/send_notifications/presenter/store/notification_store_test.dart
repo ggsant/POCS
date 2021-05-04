@@ -28,7 +28,7 @@ void main() {
         return NotificationStore(usecase);
       },
       act: (store) => store.sendNotifications(
-          'title', 'body', CredentialResult('title', 'appId', 'token')),
+          'title', 'body', CredentialResult('title', 'appId', 'token', 'id')),
       expect: () => [tripleState, true, const NotificationResult('ok!'), false],
       verify: (store) {
         verify(() => usecase.call(any())).called(1);
@@ -43,7 +43,7 @@ void main() {
         return NotificationStore(usecase);
       },
       act: (store) => store.sendNotifications(
-          'title', 'body', CredentialResult('', '', '')),
+          'title', 'body', CredentialResult('', '', '', '')),
       expect: () => [
         tripleState,
         true,

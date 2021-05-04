@@ -39,6 +39,7 @@ void main() {
       expect(
           response,
           Right(const CredentialResult(
+            'Nenhum parâmetro foi especificado para o id.',
             'Nenhum parâmetro foi especificado para o titulo.',
             'Nenhum parâmetro foi especificado para o appId.',
             'Nenhum parâmetro foi especificado para o token.',
@@ -50,7 +51,7 @@ void main() {
         () async {
       //?act
       final response =
-          await usecase(const CredentialResult('', 'appId', 'token'));
+          await usecase(const CredentialResult('', 'appId', 'token', ''));
       //!assert
       expect(response.isLeft(), true);
       expect(
@@ -64,7 +65,7 @@ void main() {
         () async {
       //?act
       final response =
-          await usecase(const CredentialResult('title', '', 'token'));
+          await usecase(const CredentialResult('title', '', 'token', 'id'));
       //!assert
       expect(response.isLeft(), true);
       expect(
@@ -78,7 +79,7 @@ void main() {
         () async {
       //?act
       final response =
-          await usecase(const CredentialResult('title', 'appId', ''));
+          await usecase(const CredentialResult('title', 'appId', '', 'id'));
       //!assert
       expect(response.isLeft(), true);
       expect(

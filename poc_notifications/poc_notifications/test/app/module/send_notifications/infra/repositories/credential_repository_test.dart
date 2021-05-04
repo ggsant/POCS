@@ -16,7 +16,7 @@ void main() {
     repository = CredentialRepositoryImpl(datasource);
   });
 
-  final tNotificationModel = CredentialResult('', '', '');
+  final tNotificationModel = CredentialResult('', '', '', '');
 
   group('CredentialRepositoryImpl', () {
     test(

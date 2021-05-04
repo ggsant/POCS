@@ -50,7 +50,7 @@ void main() {
         return Modular.get<NotificationStore>();
       },
       act: (store) => store.sendNotifications(
-          'title', 'body', CredentialResult('title', 'appId', 'token')),
+          'title', 'body', CredentialResult('title', 'appId', 'token', 'id')),
       expect: () => [tripleState, true, const NotificationResult('Ok!'), false],
     );
 
@@ -67,7 +67,7 @@ void main() {
         return Modular.get<NotificationStore>();
       },
       act: (store) => store.sendNotifications(
-          'title', 'body', CredentialResult('title', 'appId', 'token')),
+          'title', 'body', CredentialResult('title', 'appId', 'token', 'id')),
       expect: () => [
         tripleState,
         true,
