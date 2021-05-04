@@ -29,4 +29,15 @@ class CredentialRepositoryImpl implements CredentialRepository {
       return Left(e);
     }
   }
+
+  @override
+  Future<Either<CredentialFailures, CredentialResult>> deleteCredential(
+      CredentialResult params) async {
+    try {
+      final credential = await dataSouce.deleteCredential(params);
+      return Right(credential);
+    } on CredentialFailures catch (e) {
+      return Left(e);
+    }
+  }
 }

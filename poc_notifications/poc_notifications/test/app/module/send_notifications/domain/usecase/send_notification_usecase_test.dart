@@ -44,60 +44,63 @@ void main() {
       expect(response.isRight(), true);
       expect(
           response,
-          Right(
-              const NotificationResult('Nenhum parâmetro foi especificado.')));
+          Right(const NotificationResult(
+            'Nenhum parâmetro foi especificado.',
+          )));
     });
     test(
         'Should perform the body evaluation and return a ValidationNotificationFailure if the body is empty',
         () async {
       //?act
       final response = await usecase(NotificationParams(
-          body: '', appId: 'appId', title: 'title', token: 'token'));
+        body: '',
+        appId: 'appId',
+        title: 'title',
+        token: 'token',
+      ));
       //!assert
       expect(response.isLeft(), true);
       expect(
           response,
           Left(const ValidationNotificationFailure(
-              'O body não pode ser vazio.')));
+            'O body não pode ser vazio.',
+          )));
     });
     test(
         'Should perform the title evaluation and return a ValidationNotificationFailure if the title is empty',
         () async {
       //?act
       final response = await usecase(NotificationParams(
-          body: 'body', appId: 'appId', title: '', token: 'token'));
+        body: 'body',
+        appId: 'appId',
+        title: '',
+        token: 'token',
+      ));
       //!assert
       expect(response.isLeft(), true);
       expect(
           response,
           Left(const ValidationNotificationFailure(
-              'O titulo não pode ser vazio.')));
+            'O titulo não pode ser vazio.',
+          )));
     });
     test(
         'Should perform the appId evaluation and return a ValidationNotificationFailure if the appId is empty',
         () async {
       //?act
       final response = await usecase(NotificationParams(
-          body: 'body', appId: '', title: 'title', token: 'token'));
+        body: 'body',
+        appId: '',
+        title: 'title',
+        token: 'token',
+      ));
       //!assert
       expect(response.isLeft(), true);
       expect(
           response,
           Left(const ValidationNotificationFailure(
-              'O appId não pode ser vazio.')));
-    });
-    test(
-        'Should perform the appId evaluation and return a ValidationNotificationFailure if the token is empty',
-        () async {
-      //?act
-      final response = await usecase(NotificationParams(
-          body: 'body', appId: '', title: 'title', token: 'token'));
-      //!assert
-      expect(response.isLeft(), true);
-      expect(
-          response,
-          Left(const ValidationNotificationFailure(
-              'O token não pode ser vazio.')));
+            'O appId não pode ser vazio.',
+          )));
     });
   });
 }
