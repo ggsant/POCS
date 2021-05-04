@@ -51,7 +51,7 @@ void main() {
       final response = datasource.sendNotifications(NotificationParamsEmpty());
       //!assert
       //erro capcioso colocar () => quando for testar erro
-      expect(() => response, throwsA(isA<DataSourceFailure>()));
+      expect(() => response, throwsA(isA<DataSourceNotificationFailure>()));
       verify(() => client.post(any(), data: any(named: 'data'), options: any(named: 'options'))).called(1);
     });
   });

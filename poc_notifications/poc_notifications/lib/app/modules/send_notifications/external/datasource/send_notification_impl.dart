@@ -19,14 +19,18 @@ class SendNotificationDataSouceImpl implements SendNotificationDataSouce {
         "contents": {"en": params.body}
       },
       options: Options(
-        headers: {"Content-Type": "application/json; charset=utf-8", "Authorization": "Basic ${params.token}"},
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          "Authorization": "Basic ${params.token}"
+        },
       ),
     );
 
     if (response.statusCode == 200) {
       return const NotificationResult('Ok!');
     } else {
-      throw const DataSourceFailure('Ocorreu um erro no datasource');
+      throw const DataSourceNotificationFailure(
+          'Ocorreu um erro no datasource');
     }
   }
 }

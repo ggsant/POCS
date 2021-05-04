@@ -7,7 +7,8 @@ import 'package:poc_notifications/app/modules/send_notifications/domain/models/n
 import 'package:poc_notifications/app/modules/send_notifications/domain/repositories/send_notification_repository.dart';
 import 'package:poc_notifications/app/modules/send_notifications/domain/usecase/send_notification_usecase.dart';
 
-class MockSendNotificationRepository extends Mock implements SendNotificationRepository {}
+class MockSendNotificationRepository extends Mock
+    implements SendNotificationRepository {}
 
 void main() {
   late MockSendNotificationRepository repository;
@@ -18,44 +19,85 @@ void main() {
   });
 
   group('SendNotificaionUseCaseImpl', () {
-    test('Should return a NotificationResult(Ok!) when parameters are called correctly', () async {
+    test(
+        'Should return a NotificationResult(Ok!) when parameters are called correctly',
+        () async {
       //* arrange
-      when(() => repository.sendNotifications(const NotificationParams(appId: 'appId', body: 'body', title: 'title', token: 'token'))).thenAnswer((_) async => Right(const NotificationResult('Ok!')));
+      when(() => repository.sendNotifications(const NotificationParams(
+              appId: 'appId', body: 'body', title: 'title', token: 'token')))
+          .thenAnswer((_) async => Right(const NotificationResult('Ok!')));
       //?act
       final response = await usecase(
-        const NotificationParams(appId: 'appId', body: 'body', title: 'title', token: 'token'),
+        const NotificationParams(
+            appId: 'appId', body: 'body', title: 'title', token: 'token'),
       );
       //!assert
       expect(response.isRight(), true);
       expect(response, Right(const NotificationResult('Ok!')));
     });
-    test('Should return a NotificationResult(Nenhum parâmetro foi especificado.) when parameters are called correctly', () async {
+    test(
+        'Should return a NotificationResult(Nenhum parâmetro foi especificado.) when parameters are called correctly',
+        () async {
       //?act
       final response = await usecase(NotificationParamsEmpty());
       //!assert
       expect(response.isRight(), true);
-      expect(response, Right(const NotificationResult('Nenhum parâmetro foi especificado.')));
+      expect(
+          response,
+          Right(
+              const NotificationResult('Nenhum parâmetro foi especificado.')));
     });
-    test('Should perform the body evaluation and return a ValidationFailure if the body is empty', () async {
+    test(
+        'Should perform the body evaluation and return a ValidationNotificationFailure if the body is empty',
+        () async {
       //?act
-      final response = await usecase(NotificationParams(body: '', appId: 'appId', title: 'title', token: ''));
+      final response = await usecase(NotificationParams(
+          body: '', appId: 'appId', title: 'title', token: 'token'));
       //!assert
       expect(response.isLeft(), true);
-      expect(response, Left(const ValidationFailure('O body não pode ser vazio.')));
+      expect(
+          response,
+          Left(const ValidationNotificationFailure(
+              'O body não pode ser vazio.')));
     });
-    test('Should perform the title evaluation and return a ValidationFailure if the title is empty', () async {
+    test(
+        'Should perform the title evaluation and return a ValidationNotificationFailure if the title is empty',
+        () async {
       //?act
-      final response = await usecase(NotificationParams(body: 'body', appId: 'appId', title: '', token: ''));
+      final response = await usecase(NotificationParams(
+          body: 'body', appId: 'appId', title: '', token: 'token'));
       //!assert
       expect(response.isLeft(), true);
-      expect(response, Left(const ValidationFailure('O titulo não pode ser vazio.')));
+      expect(
+          response,
+          Left(const ValidationNotificationFailure(
+              'O titulo não pode ser vazio.')));
     });
-    test('Should perform the appId evaluation and return a ValidationFailure if the appId is empty', () async {
+    test(
+        'Should perform the appId evaluation and return a ValidationNotificationFailure if the appId is empty',
+        () async {
       //?act
-      final response = await usecase(NotificationParams(body: 'body', appId: '', title: 'title', token: ''));
+      final response = await usecase(NotificationParams(
+          body: 'body', appId: '', title: 'title', token: 'token'));
       //!assert
       expect(response.isLeft(), true);
-      expect(response, Left(const ValidationFailure('O appId não pode ser vazio.')));
+      expect(
+          response,
+          Left(const ValidationNotificationFailure(
+              'O appId não pode ser vazio.')));
+    });
+    test(
+        'Should perform the appId evaluation and return a ValidationNotificationFailure if the token is empty',
+        () async {
+      //?act
+      final response = await usecase(NotificationParams(
+          body: 'body', appId: '', title: 'title', token: 'token'));
+      //!assert
+      expect(response.isLeft(), true);
+      expect(
+          response,
+          Left(const ValidationNotificationFailure(
+              'O token não pode ser vazio.')));
     });
   });
 }

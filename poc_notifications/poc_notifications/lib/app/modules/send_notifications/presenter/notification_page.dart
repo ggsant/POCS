@@ -14,7 +14,8 @@ class NotificationPage extends StatefulWidget {
   _NotificationPageState createState() => _NotificationPageState();
 }
 
-class _NotificationPageState extends ModularState<NotificationPage, NotificationStore> {
+class _NotificationPageState
+    extends ModularState<NotificationPage, NotificationStore> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _bodyController = TextEditingController();
 
@@ -25,17 +26,24 @@ class _NotificationPageState extends ModularState<NotificationPage, Notification
   }
 
   Widget _buildError(NotificationsFailures error) {
-    if (error is DataSourceFailure) {
-      return Center(
-        child: Text('Algo inesperado aconteceu. Tente novamene'),
+    if (error is DataSourceNotificationFailure) {
+      return Scaffold(
+        body: Center(
+          child: Text('Algo inesperado aconteceu. Tente novamene'),
+        ),
       );
-    } else if (error is ValidationFailure) {
-      return Center(
-        child: Text('Os campos de titulo e corpo da notificação não podem estar vazios'),
+    } else if (error is ValidationNotificationFailure) {
+      return Scaffold(
+        body: Center(
+          child: Text(
+              'Os campos de titulo e corpo da notificação não podem estar vazios'),
+        ),
       );
     } else {
-      return Center(
-        child: Text('Deu ruim'),
+      return Scaffold(
+        body: Center(
+          child: Text('Deu ruim'),
+        ),
       );
     }
   }
@@ -43,9 +51,11 @@ class _NotificationPageState extends ModularState<NotificationPage, Notification
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ScopedBuilder<NotificationStore, NotificationsFailures, NotificationResult>(
+      body: ScopedBuilder<NotificationStore, NotificationsFailures,
+          NotificationResult>(
         store: controller,
-        onLoading: (_) => Center(child: CircularProgressIndicator()),
+        onLoading: (_) =>
+            Scaffold(body: Center(child: CircularProgressIndicator())),
         onState: (_, state) {
           return OnStatePage(
             bodyController: _bodyController,
