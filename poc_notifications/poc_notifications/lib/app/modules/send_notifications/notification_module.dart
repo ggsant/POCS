@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:poc_notifications/app/modules/send_notifications/domain/usecase/send_notification_usecase.dart';
 import 'package:poc_notifications/app/modules/send_notifications/external/datasource/send_notification_datasource_impl.dart';
@@ -19,7 +18,6 @@ class NotificationModule extends Module {
         (i) => SendNotificationRepositoryImpl(i())),
     Bind.factory<SendNotificationDataSouce>(
         (i) => SendNotificationDataSouceImpl(i())),
-    Bind.factory<Dio>((i) => Dio())
   ];
 
   @override
