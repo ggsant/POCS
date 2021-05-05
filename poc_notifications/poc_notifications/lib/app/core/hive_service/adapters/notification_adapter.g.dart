@@ -1,41 +1,33 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'credentials_result.dart';
+part of 'notification_adapter.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class CredentialResultAdapter extends TypeAdapter<CredentialResult> {
+class NotificationResultHiveAdapter
+    extends TypeAdapter<NotificationResultHive> {
   @override
   final int typeId = 1;
 
   @override
-  CredentialResult read(BinaryReader reader) {
+  NotificationResultHive read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return CredentialResult(
-      fields[1] as String,
-      fields[2] as String,
-      fields[3] as String,
+    return NotificationResultHive(
       fields[0] as String,
     );
   }
 
   @override
-  void write(BinaryWriter writer, CredentialResult obj) {
+  void write(BinaryWriter writer, NotificationResultHive obj) {
     writer
-      ..writeByte(4)
-      ..writeByte(0)
-      ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.title)
-      ..writeByte(2)
-      ..write(obj.appId)
-      ..writeByte(3)
-      ..write(obj.token);
+      ..writeByte(0)
+      ..write(obj.message);
   }
 
   @override
@@ -44,7 +36,7 @@ class CredentialResultAdapter extends TypeAdapter<CredentialResult> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is CredentialResultAdapter &&
+      other is NotificationResultHiveAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
