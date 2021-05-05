@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
+import 'package:poc_notifications/app/core/hive_service/adapters/credential_adapter.dart';
 import '../repositories/credential_repository.dart';
 import '../entities/credentials_result.dart';
 import '../errors/credentials_failures/credential_failures.dart';
 
 abstract class DeleteCredentialUseCase {
-  Future<Either<CredentialFailures, CredentialResult>> call(
-      CredentialResult params);
+  Future<Either<CredentialFailures, void>> call(CredentialResultHive params);
 }
 
 class DeleteCredentialUseCaseImpl implements DeleteCredentialUseCase {
@@ -14,9 +14,9 @@ class DeleteCredentialUseCaseImpl implements DeleteCredentialUseCase {
   const DeleteCredentialUseCaseImpl(this.repository);
 
   @override
-  Future<Either<CredentialFailures, CredentialResult>> call(
-      CredentialResult params) async {
-    if (params is CredentialResultEmpty) {
+  Future<Either<CredentialFailures, void>> call(
+      CredentialResultHive params) async {
+    if (params is CredentialResultHiveEmpty) {
       return Right(const CredentialResult(
         'Nenhum parâmetro foi especificado para o id.',
         'Nenhum parâmetro foi especificado para o titulo.',

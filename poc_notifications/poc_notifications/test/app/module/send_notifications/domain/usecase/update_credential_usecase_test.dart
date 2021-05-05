@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:poc_notifications/app/modules/send_notifications/domain/entities/credentials_result.dart';
+import 'package:poc_notifications/app/core/hive_service/adapters/credential_adapter.dart';
 import 'package:poc_notifications/app/modules/send_notifications/domain/errors/credentials_failures/credential_failures.dart';
 import 'package:poc_notifications/app/modules/send_notifications/domain/repositories/credential_repository.dart';
 import 'package:poc_notifications/app/modules/send_notifications/domain/usecase/update_credential_usecase.dart';
@@ -33,12 +33,12 @@ void main() {
         'Should return a CredentialResult when parameters are called with CredentialResultEmpty',
         () async {
       //?act
-      final response = await usecase(const CredentialResultEmpty());
+      final response = await usecase(const CredentialResultHiveEmpty());
       //!assert
       expect(response.isRight(), true);
       expect(
           response,
-          Right(const CredentialResult(
+          Right(const CredentialResultHive(
             'Nenhum parâmetro foi especificado para o id.',
             'Nenhum parâmetro foi especificado para o titulo.',
             'Nenhum parâmetro foi especificado para o appId.',
@@ -51,7 +51,7 @@ void main() {
         () async {
       //?act
       final response =
-          await usecase(const CredentialResult('', 'appId', 'token', ''));
+          await usecase(const CredentialResultHive('', 'appId', 'token', ''));
       //!assert
       expect(response.isLeft(), true);
       expect(
@@ -65,7 +65,7 @@ void main() {
         () async {
       //?act
       final response =
-          await usecase(const CredentialResult('title', '', 'token', 'id'));
+          await usecase(const CredentialResultHive('title', '', 'token', 'id'));
       //!assert
       expect(response.isLeft(), true);
       expect(
@@ -79,7 +79,7 @@ void main() {
         () async {
       //?act
       final response =
-          await usecase(const CredentialResult('title', 'appId', '', 'id'));
+          await usecase(const CredentialResultHive('title', 'appId', '', 'id'));
       //!assert
       expect(response.isLeft(), true);
       expect(

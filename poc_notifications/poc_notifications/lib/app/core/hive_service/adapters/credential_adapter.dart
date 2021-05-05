@@ -13,6 +13,10 @@ class CredentialResultHive extends CredentialResult {
   final String appId;
   @HiveField(3)
   final String token;
-  CredentialResultHive(this.title, this.appId, this.token, this.id)
+  const CredentialResultHive(this.title, this.appId, this.token, this.id)
       : super(title, appId, token, id);
+}
+
+class CredentialResultHiveEmpty extends CredentialResultHive {
+  const CredentialResultHiveEmpty() : super('', '', '', '');
 }

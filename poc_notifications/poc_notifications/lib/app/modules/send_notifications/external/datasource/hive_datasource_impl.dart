@@ -1,44 +1,41 @@
+import 'package:poc_notifications/app/core/hive_service/adapters/credential_adapter.dart';
 import 'package:poc_notifications/app/core/hive_service/hive_service.dart';
 
-import '../../domain/entities/credentials_result.dart';
 import '../../infra/datasource/hive_datasource.dart';
 
 class HiveDataSouceImpl implements HiveDataSouce {
   final HiveService service;
 
   const HiveDataSouceImpl(this.service);
+
   @override
-  Future<CredentialResult> deleteCredential(CredentialResult params) async {
-    for (int i = 0; i < service.credential!.length; i++) {
-      if (service.credential!.getAt(i).id == params.id) {
-        await service.credential!.deleteAt(i);
-        break;
-      }
-    }
-    return CredentialResultEmpty();
+  Future<void> saveCredential(CredentialResultHive result) async {
+    await service.credential!.put(result.id, result);
   }
 
   @override
-  Future<CredentialResult> fetchCredential(CredentialResult params) async {
-    for (var i = 0; i < service.credential!.length; i++) {
-      if (service.credential!.getAt(i).id == params.id) {
-        await service.credential!.getAt(i);
-      }
-    }
-    return CredentialResult('${params.title}', '${params.appId}',
-        '${params.token}', '${params.id}');
+  Future<void> updateCredential(CredentialResultHive result) async {
+    await service.credential!.put(result.id, result);
   }
 
   @override
-  Future<CredentialResult> saveCredential(CredentialResult params) async {
-    await service.credential!.add(params);
+  Future<void> deleteCredential(CredentialResultHive result) async {
+    final resultIds = service.credential!.keys;
 
-    return CredentialResultEmpty();
+    await service.credential!.delete(resultIds);
   }
 
   @override
-  Future<CredentialResult> updateCredential(CredentialResult params) async {
-    await service.credential!.putAt(int.parse(params.id), params);
-    return CredentialResultEmpty();
+  Future<List<CredentialResultHive>> fetchCredential(
+      CredentialResultHive result) async {
+    final resultIds = service.credential!.keys;
+
+    List<CredentialResultHive> credentialResult = [];
+
+    resultIds.forEach((resultId) {
+      credentialResult.add(service.credential!.get(resultId));
+    });
+
+    return credentialResult;
   }
 }
