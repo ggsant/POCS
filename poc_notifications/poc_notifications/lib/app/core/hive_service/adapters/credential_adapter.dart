@@ -3,7 +3,7 @@ import 'package:poc_notifications/app/modules/send_notifications/domain/entities
 
 part 'credential_adapter.g.dart';
 
-@HiveType(typeId: 0)
+@HiveType(adapterName: 'CredentialAdapter', typeId: 0)
 class CredentialResultHive implements CredentialResult {
   @HiveField(0)
   final String id;
