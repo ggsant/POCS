@@ -23,7 +23,7 @@ class HiveService {
     Directory directory = await getApplicationDocumentsDirectory();
     Hive.init(directory.path);
     Hive.registerAdapter<NotificationResult>(NotificationResultHiveAdapter());
-    Hive.registerAdapter<CredentialResult>(CredentialResultHiveAdapter());
+    Hive.registerAdapter<CredentialResult>(CredentialResultAdapter());
     notification = await Hive.openBox<NotificationResult>(notificationBoxName);
     credential = await Hive.openBox<CredentialResult>(credentialBoxName);
     return true;

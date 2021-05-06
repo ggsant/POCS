@@ -16,3 +16,7 @@ class ValidationCredentialFailure extends CredentialFailures {
 class DataSourceCredentialFailure extends CredentialFailures {
   const DataSourceCredentialFailure(String message) : super(message);
 }
+
+class EmptyCredentialFieldFailure extends CredentialFailures {
+  const EmptyCredentialFieldFailure(String paramName) : super('O parâmetro $paramName não pode ser vazio.');
+}

@@ -1,9 +1,10 @@
-import 'package:poc_notifications/app/core/hive_service/adapters/credential_adapter.dart';
+import 'package:dartz/dartz.dart';
+
+import '../../domain/entities/credentials_result.dart';
 
 abstract class HiveDataSouce {
-  Future<void> saveCredential(CredentialResultHive params);
-  Future<void> updateCredential(CredentialResultHive params);
-  Future<void> deleteCredential(CredentialResultHive params);
-  Future<List<CredentialResultHive>> fetchCredential(
-      CredentialResultHive params);
+  Future<CredentialResult> saveCredential(CredentialResult params);
+  Future<List<CredentialResult>> fetchCredential(String credentialName);
+  Future<Unit> updateCredential(CredentialResult params);
+  Future<Unit> deleteCredential(String id);
 }

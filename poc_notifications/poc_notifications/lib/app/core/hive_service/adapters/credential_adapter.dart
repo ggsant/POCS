@@ -4,7 +4,7 @@ import 'package:poc_notifications/app/modules/send_notifications/domain/entities
 part 'credential_adapter.g.dart';
 
 @HiveType(typeId: 0)
-class CredentialResultHive extends CredentialResult {
+class CredentialResultHive implements CredentialResult {
   @HiveField(0)
   final String id;
   @HiveField(1)
@@ -13,10 +13,9 @@ class CredentialResultHive extends CredentialResult {
   final String appId;
   @HiveField(3)
   final String token;
-  const CredentialResultHive(this.title, this.appId, this.token, this.id)
-      : super(title, appId, token, id);
+  const CredentialResultHive(this.title, this.appId, this.token, this.id) : super();
 }
 
-class CredentialResultHiveEmpty extends CredentialResultHive {
+class CredentialResultHiveEmpty extends CredentialResult {
   const CredentialResultHiveEmpty() : super('', '', '', '');
 }

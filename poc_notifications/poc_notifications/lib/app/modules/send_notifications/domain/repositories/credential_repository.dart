@@ -1,14 +1,10 @@
 import 'package:dartz/dartz.dart';
-import 'package:poc_notifications/app/core/hive_service/adapters/credential_adapter.dart';
+import '../entities/credentials_result.dart';
 import '../errors/credentials_failures/credential_failures.dart';
 
 abstract class CredentialRepository {
-  Future<Either<CredentialFailures, void>> saveCredential(
-      CredentialResultHive params);
-  Future<Either<CredentialFailures, void>> updateCredential(
-      CredentialResultHive params);
-  Future<Either<CredentialFailures, void>> deleteCredential(
-      CredentialResultHive params);
-  Future<Either<CredentialFailures, List<CredentialResultHive>>>
-      fetchCredential(CredentialResultHive params);
+  Future<Either<CredentialFailures, CredentialResult>> saveCredential(CredentialResult params);
+  Future<Either<CredentialFailures, List<CredentialResult>>> fetchCredential(String credentialName);
+  Future<Either<CredentialFailures, Unit>> updateCredential(CredentialResult params);
+  Future<Either<CredentialFailures, Unit>> deleteCredential(String id);
 }

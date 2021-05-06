@@ -5,8 +5,6 @@ class CredentialResult {
   final String token;
 
   const CredentialResult(this.title, this.appId, this.token, this.id);
-}
 
-class CredentialResultEmpty extends CredentialResult {
-  const CredentialResultEmpty() : super('', '', '', '');
+  factory CredentialResult.empty() => const CredentialResult('', '', '', '');
 }

@@ -4,8 +4,8 @@ import 'package:poc_notifications/app/modules/send_notifications/domain/entities
 part 'notification_adapter.g.dart';
 
 @HiveType(typeId: 1)
-class NotificationResultHive extends NotificationResult {
+class NotificationResultHive implements NotificationResult {
   @HiveField(0)
   final String message;
-  NotificationResultHive(this.message) : super(message);
+  NotificationResultHive(this.message) : super();
 }

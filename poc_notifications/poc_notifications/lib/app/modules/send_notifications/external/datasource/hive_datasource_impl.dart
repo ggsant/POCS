@@ -1,41 +1,43 @@
-import 'package:poc_notifications/app/core/hive_service/adapters/credential_adapter.dart';
-import 'package:poc_notifications/app/core/hive_service/hive_service.dart';
+// import 'package:dartz/dartz.dart';
 
-import '../../infra/datasource/hive_datasource.dart';
+// import '../../../../core/hive_service/hive_service.dart';
+// import '../../domain/entities/credentials_result.dart';
 
-class HiveDataSouceImpl implements HiveDataSouce {
-  final HiveService service;
+// import '../../infra/datasource/hive_datasource.dart';
 
-  const HiveDataSouceImpl(this.service);
+// class HiveDataSouceImpl implements HiveDataSouce {
+//   final HiveService service;
 
-  @override
-  Future<void> saveCredential(CredentialResultHive result) async {
-    await service.credential!.put(result.id, result);
-  }
+//   const HiveDataSouceImpl(this.service);
 
-  @override
-  Future<void> updateCredential(CredentialResultHive result) async {
-    await service.credential!.put(result.id, result);
-  }
+//   @override
+//   Future<CredentialResult> saveCredential(CredentialResult params) async {
+//     await service.credential!.put(params.id, params);
+//     return CredentialResult(params.title, params.appId, params.token, params.id);
+//   }
 
-  @override
-  Future<void> deleteCredential(CredentialResultHive result) async {
-    final resultIds = service.credential!.keys;
+//   @override
+//   Future<List<CredentialResult>> fetchCredential(String credentialName) async {
+//     final resultIds = service.credential!.keys;
 
-    await service.credential!.delete(resultIds);
-  }
+//     List<CredentialResult> credentialResult = [];
 
-  @override
-  Future<List<CredentialResultHive>> fetchCredential(
-      CredentialResultHive result) async {
-    final resultIds = service.credential!.keys;
+//     resultIds.forEach((resultId) {
+//       credentialResult.add(service.credential!.get(resultId));
+//     });
 
-    List<CredentialResultHive> credentialResult = [];
+//     return credentialResult;
+//   }
 
-    resultIds.forEach((resultId) {
-      credentialResult.add(service.credential!.get(resultId));
-    });
+//   @override
+//   Future<Unit> updateCredential(CredentialResult params) async {
+//     await service.credential!.put(params.id, params);
+//     return unit;
+//   }
 
-    return credentialResult;
-  }
-}
+//   @override
+//   Future<Unit> deleteCredential(String id) async {
+//     await service.credential!.delete(id);
+//     return unit;
+//   }
+// }

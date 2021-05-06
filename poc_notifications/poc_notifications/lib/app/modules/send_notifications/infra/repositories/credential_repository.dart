@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:poc_notifications/app/core/hive_service/adapters/credential_adapter.dart';
+import '../../domain/entities/credentials_result.dart';
 import '../datasource/hive_datasource.dart';
 import '../../domain/errors/credentials_failures/credential_failures.dart';
 import '../../domain/repositories/credential_repository.dart';
@@ -10,8 +10,7 @@ class CredentialRepositoryImpl implements CredentialRepository {
   const CredentialRepositoryImpl(this.dataSouce);
 
   @override
-  Future<Either<CredentialFailures, void>> saveCredential(
-      CredentialResultHive params) async {
+  Future<Either<CredentialFailures, CredentialResult>> saveCredential(CredentialResult params) async {
     try {
       final credential = await dataSouce.saveCredential(params);
       return Right(credential);
@@ -21,8 +20,17 @@ class CredentialRepositoryImpl implements CredentialRepository {
   }
 
   @override
-  Future<Either<CredentialFailures, void>> updateCredential(
-      CredentialResultHive params) async {
+  Future<Either<CredentialFailures, List<CredentialResult>>> fetchCredential(String credentialName) async {
+    try {
+      final credential = await dataSouce.fetchCredential(credentialName);
+      return Right(credential);
+    } on CredentialFailures catch (e) {
+      return Left(e);
+    }
+  }
+
+  @override
+  Future<Either<CredentialFailures, Unit>> updateCredential(CredentialResult params) async {
     try {
       final credential = await dataSouce.updateCredential(params);
       return Right(credential);
@@ -32,21 +40,9 @@ class CredentialRepositoryImpl implements CredentialRepository {
   }
 
   @override
-  Future<Either<CredentialFailures, void>> deleteCredential(
-      CredentialResultHive params) async {
+  Future<Either<CredentialFailures, Unit>> deleteCredential(String id) async {
     try {
-      final credential = await dataSouce.deleteCredential(params);
-      return Right(credential);
-    } on CredentialFailures catch (e) {
-      return Left(e);
-    }
-  }
-
-  @override
-  Future<Either<CredentialFailures, List<CredentialResultHive>>>
-      fetchCredential(CredentialResultHive params) async {
-    try {
-      final credential = await dataSouce.fetchCredential(params);
+      final credential = await dataSouce.deleteCredential(id);
       return Right(credential);
     } on CredentialFailures catch (e) {
       return Left(e);

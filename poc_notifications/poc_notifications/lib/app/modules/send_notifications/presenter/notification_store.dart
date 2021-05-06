@@ -8,15 +8,12 @@ import '../domain/usecase/send_notification_usecase.dart';
 
 import '../../../../api_one_signal.dart';
 
-class NotificationStore
-    extends NotifierStore<NotificationsFailures, NotificationResult> {
+class NotificationStore extends NotifierStore<NotificationsFailures, NotificationResult> {
   final SendNotificationUseCase sendNotificationsUsecase;
 
-  NotificationStore(this.sendNotificationsUsecase)
-      : super(NotificationResultEmpty());
+  NotificationStore(this.sendNotificationsUsecase) : super(NotificationResult.empty());
 
-  void sendNotifications(
-      String title, String body, CredentialResult credential) {
+  void sendNotifications(String title, String body, CredentialResult credential) {
     executeEither(
       () => sendNotificationsUsecase(
         NotificationParams(

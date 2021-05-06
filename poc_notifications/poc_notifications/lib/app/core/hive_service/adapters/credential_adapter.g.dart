@@ -6,17 +6,17 @@ part of 'credential_adapter.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class CredentialResultHiveAdapter extends TypeAdapter<CredentialResultHive> {
+class CredentialResultAdapter extends TypeAdapter<CredentialResult> {
   @override
   final int typeId = 0;
 
   @override
-  CredentialResultHive read(BinaryReader reader) {
+  CredentialResult read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return CredentialResultHive(
+    return CredentialResult(
       fields[1] as String,
       fields[2] as String,
       fields[3] as String,
@@ -25,7 +25,7 @@ class CredentialResultHiveAdapter extends TypeAdapter<CredentialResultHive> {
   }
 
   @override
-  void write(BinaryWriter writer, CredentialResultHive obj) {
+  void write(BinaryWriter writer, CredentialResult obj) {
     writer
       ..writeByte(4)
       ..writeByte(0)
@@ -43,8 +43,5 @@ class CredentialResultHiveAdapter extends TypeAdapter<CredentialResultHive> {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is CredentialResultHiveAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      identical(this, other) || other is CredentialResultAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }
