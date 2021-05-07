@@ -1,43 +1,44 @@
-import 'package:dartz/dartz.dart';
-
-import '../../../../core/hive_service/hive_service.dart';
+import 'package:poc_notifications/app/core/local_storage_service/local_storage_service.dart';
+import 'package:poc_notifications/app/modules/send_notifications/external/datasource/adapters/credential_adapters.dart';
 import '../../domain/entities/credentials_result.dart';
-
 import '../../infra/datasource/hive_datasource.dart';
 
+const LIST_CREDENTIAL_KEY = 'LIST_CREDENTIAL_KEY';
+
 class HiveDataSouceImpl implements HiveDataSouce {
-  final HiveService service;
+  final LocalStorageService service;
 
   const HiveDataSouceImpl(this.service);
 
   @override
-  Future<CredentialResult> saveCredential(CredentialResult params) async {
-    await service.credential!.put(params.id, params);
-    return CredentialResult(params.title, params.appId, params.token, params.id);
+  Future<void> saveCredential(CredentialResult params) async {
+    var listCredential = await service.get(LIST_CREDENTIAL_KEY) ?? [];
+    listCredential.add(CredentialAdapters.toJson(params));
+    service.save(LIST_CREDENTIAL_KEY, listCredential);
   }
 
   @override
-  Future<List<CredentialResult>> fetchCredential(String credentialName) async {
-    final resultIds = service.credential!.keys;
-
-    List<CredentialResult> credentialResult = [];
-
-    resultIds.forEach((resultId) {
-      credentialResult.add(service.credential!.get(resultId));
-    });
-
-    return credentialResult;
+  Future<List<CredentialResult>> fetchCredential() async {
+    var listCredential = (await service.get(LIST_CREDENTIAL_KEY)) as List;
+    return listCredential.map((e) => CredentialAdapters.fromJson(e)).toList();
   }
 
   @override
-  Future<Unit> updateCredential(CredentialResult params) async {
-    await service.credential!.put(params.id, params);
-    return unit;
+  Future<void> updateCredential(CredentialResult params) async {
+    var listCredential = await service.get(LIST_CREDENTIAL_KEY) ?? [];
+    var indexCredential = listCredential.indexWhere((element) => element['id'] == params.id);
+    if (indexCredential.isNegative) {
+      listCredential.add(CredentialAdapters.toJson(params));
+    } else {
+      listCredential[indexCredential] = CredentialAdapters.toJson(params);
+    }
+    service.save(LIST_CREDENTIAL_KEY, listCredential);
   }
 
   @override
-  Future<Unit> deleteCredential(String id) async {
-    await service.credential!.delete(id);
-    return unit;
+  Future<void> deleteCredential(String id) async {
+    var listCredential = await service.get(LIST_CREDENTIAL_KEY) ?? [];
+    listCredential.removeWhere((element) => element['id'] == id);
+    service.save(LIST_CREDENTIAL_KEY, listCredential);
   }
 }

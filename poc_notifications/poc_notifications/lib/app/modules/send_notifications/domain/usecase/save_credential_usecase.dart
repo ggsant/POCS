@@ -3,12 +3,16 @@ import '../entities/credentials_result.dart';
 import '../repositories/credential_repository.dart';
 import '../errors/credentials_failures/credential_failures.dart';
 
-class SaveCredentialsUseCase {
+abstract class SaveCredentialsUseCase {
+  Future<Either<CredentialFailures, Unit>> call(CredentialResult params);
+}
+
+class SaveCredentialsUseCaseImpl implements SaveCredentialsUseCase {
   final CredentialRepository repository;
 
-  const SaveCredentialsUseCase(this.repository);
+  const SaveCredentialsUseCaseImpl(this.repository);
 
-  Future<Either<CredentialFailures, CredentialResult>> call(CredentialResult params) async {
+  Future<Either<CredentialFailures, Unit>> call(CredentialResult params) async {
     if (params.title.isEmpty) {
       return Left(const ValidationCredentialFailure('O titulo não pode ser vazio.'));
     } else if (params.appId.isEmpty) {

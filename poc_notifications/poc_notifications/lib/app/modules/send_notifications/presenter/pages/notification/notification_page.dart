@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import '../domain/entities/notification_result.dart';
-import '../domain/errors/notifications_failures/notifications_failures.dart';
-import 'widgets/on_state.dart';
+import '../../../domain/entities/notification_result.dart';
+import '../../../domain/errors/notifications_failures/notifications_failures.dart';
+import '../../widgets/on_state.dart';
 
 import 'notification_store.dart';
 
@@ -14,8 +14,7 @@ class NotificationPage extends StatefulWidget {
   _NotificationPageState createState() => _NotificationPageState();
 }
 
-class _NotificationPageState
-    extends ModularState<NotificationPage, NotificationStore> {
+class _NotificationPageState extends ModularState<NotificationPage, NotificationStore> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _bodyController = TextEditingController();
 
@@ -35,8 +34,7 @@ class _NotificationPageState
     } else if (error is ValidationNotificationFailure) {
       return Scaffold(
         body: Center(
-          child: Text(
-              'Os campos de titulo e corpo da notificação não podem estar vazios'),
+          child: Text('Os campos de titulo e corpo da notificação não podem estar vazios'),
         ),
       );
     } else {
@@ -51,11 +49,9 @@ class _NotificationPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ScopedBuilder<NotificationStore, NotificationsFailures,
-          NotificationResult>(
+      body: ScopedBuilder<NotificationStore, NotificationsFailures, NotificationResult>(
         store: controller,
-        onLoading: (_) =>
-            Scaffold(body: Center(child: CircularProgressIndicator())),
+        onLoading: (_) => Scaffold(body: Center(child: CircularProgressIndicator())),
         onState: (_, state) {
           return OnStatePage(
             bodyController: _bodyController,

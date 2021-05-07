@@ -10,13 +10,25 @@ class CredentialRepositoryMock extends Mock implements CredentialRepository {}
 
 void main() {
   late CredentialRepositoryMock repository;
-  late UpdateCredentialsUseCase usecase;
+  late UpdateCredentialsUseCaseImpl usecase;
   setUpAll(() {
     repository = CredentialRepositoryMock();
-    usecase = UpdateCredentialsUseCase(repository);
+    usecase = UpdateCredentialsUseCaseImpl(repository);
   });
 
+  final tCredrentials = CredentialResult('title', 'appId', 'token', 'id');
+
   group('UpdateCredentialsUseCaseImpl', () {
+    test('Should delete a credential when the deleteCredential method is called ', () async {
+      //*arrange
+      when(() => repository.updateCredential(tCredrentials)).thenAnswer((_) async => Right(unit));
+      //?act
+      final response = await usecase(tCredrentials);
+      //!assert
+      expect(response.isRight(), true);
+      expect(response, Right(unit));
+      verify(() => repository.updateCredential(tCredrentials)).called(1);
+    });
     test('Should perform the title evaluation and return a ValidationFailure if the title is empty', () async {
       //?act
       final response = await usecase(const CredentialResult('', 'appId', 'token', 'id'));

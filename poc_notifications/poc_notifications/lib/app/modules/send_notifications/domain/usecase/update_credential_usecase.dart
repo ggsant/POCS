@@ -3,10 +3,14 @@ import '../entities/credentials_result.dart';
 import '../repositories/credential_repository.dart';
 import '../errors/credentials_failures/credential_failures.dart';
 
-class UpdateCredentialsUseCase {
+abstract class UpdateCredentialsUseCase {
+  Future<Either<CredentialFailures, Unit>> call(CredentialResult params);
+}
+
+class UpdateCredentialsUseCaseImpl implements UpdateCredentialsUseCase {
   final CredentialRepository repository;
 
-  const UpdateCredentialsUseCase(this.repository);
+  const UpdateCredentialsUseCaseImpl(this.repository);
 
   Future<Either<CredentialFailures, Unit>> call(CredentialResult params) async {
     if (params.id.isEmpty) {

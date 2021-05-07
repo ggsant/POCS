@@ -10,19 +10,19 @@ class CredentialRepositoryImpl implements CredentialRepository {
   const CredentialRepositoryImpl(this.dataSouce);
 
   @override
-  Future<Either<CredentialFailures, CredentialResult>> saveCredential(CredentialResult params) async {
+  Future<Either<CredentialFailures, Unit>> saveCredential(CredentialResult params) async {
     try {
-      final credential = await dataSouce.saveCredential(params);
-      return Right(credential);
+      await dataSouce.saveCredential(params);
+      return Right(unit);
     } on CredentialFailures catch (e) {
       return Left(e);
     }
   }
 
   @override
-  Future<Either<CredentialFailures, List<CredentialResult>>> fetchCredential(String credentialName) async {
+  Future<Either<CredentialFailures, List<CredentialResult>>> fetchCredential() async {
     try {
-      final credential = await dataSouce.fetchCredential(credentialName);
+      final credential = await dataSouce.fetchCredential();
       return Right(credential);
     } on CredentialFailures catch (e) {
       return Left(e);
@@ -32,8 +32,8 @@ class CredentialRepositoryImpl implements CredentialRepository {
   @override
   Future<Either<CredentialFailures, Unit>> updateCredential(CredentialResult params) async {
     try {
-      final credential = await dataSouce.updateCredential(params);
-      return Right(credential);
+      await dataSouce.updateCredential(params);
+      return Right(unit);
     } on CredentialFailures catch (e) {
       return Left(e);
     }
@@ -42,8 +42,8 @@ class CredentialRepositoryImpl implements CredentialRepository {
   @override
   Future<Either<CredentialFailures, Unit>> deleteCredential(String id) async {
     try {
-      final credential = await dataSouce.deleteCredential(id);
-      return Right(credential);
+      await dataSouce.deleteCredential(id);
+      return Right(unit);
     } on CredentialFailures catch (e) {
       return Left(e);
     }

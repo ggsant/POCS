@@ -10,19 +10,32 @@ class CredentialRepositoryMock extends Mock implements CredentialRepository {}
 
 void main() {
   late CredentialRepositoryMock repository;
-  late SaveCredentialsUseCase usecase;
+  late SaveCredentialsUseCaseImpl usecase;
   setUpAll(() {
     repository = CredentialRepositoryMock();
-    usecase = SaveCredentialsUseCase(repository);
+    usecase = SaveCredentialsUseCaseImpl(repository);
   });
 
+  final tCredrentials = CredentialResult('title', 'appId', 'token', 'id');
+
   group('SaveCredentialsUseCaseImpl', () {
+    test('Should delete a credential when the deleteCredential method is called ', () async {
+      //*arrange
+      when(() => repository.saveCredential(tCredrentials)).thenAnswer((_) async => Right(unit));
+      //?act
+      final response = await usecase(tCredrentials);
+      //!assert
+      expect(response.isRight(), true);
+      expect(response, Right(unit));
+      verify(() => repository.saveCredential(tCredrentials)).called(1);
+    });
     test('Should perform the title evaluation and return a ValidationFailure if the title is empty', () async {
       //?act
       final response = await usecase(const CredentialResult('', 'appId', 'token', 'id'));
       //!assert
       expect(response.isLeft(), true);
       expect(response, Left(const ValidationCredentialFailure('O titulo não pode ser vazio.')));
+      verifyNever(() => repository.saveCredential(const CredentialResult('', 'appId', 'token', 'id')));
     });
     test('Should perform the appId evaluation and return a ValidationCredentialFailure if the appId is empty', () async {
       //?act
@@ -30,6 +43,7 @@ void main() {
       //!assert
       expect(response.isLeft(), true);
       expect(response, Left(const ValidationCredentialFailure('O appId não pode ser vazio.')));
+      verifyNever(() => repository.saveCredential(const CredentialResult('', 'appId', 'token', 'id')));
     });
     test('Should perform the appId evaluation and return a ValidationCredentialFailure if the token is empty', () async {
       //?act
