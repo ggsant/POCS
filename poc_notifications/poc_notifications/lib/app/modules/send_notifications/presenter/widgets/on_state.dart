@@ -5,8 +5,7 @@ class OnStatePage extends StatelessWidget {
   final TextEditingController? titleController;
   final TextEditingController? bodyController;
 
-  OnStatePage({Key? key, this.titleController, this.bodyController})
-      : super(key: key);
+  OnStatePage({Key? key, this.titleController, this.bodyController}) : super(key: key);
 
   final Color color = Color.fromRGBO(229, 75, 77, 1);
   @override
@@ -59,7 +58,10 @@ class OnStatePage extends StatelessWidget {
                             color: color.withOpacity(0.5),
                           ),
                           padding: EdgeInsets.only(
-                              left: 20.0, right: 20.0, bottom: 10.0),
+                            left: 20.0,
+                            right: 20.0,
+                            bottom: 10.0,
+                          ),
                         ),
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -81,8 +83,7 @@ class OnStatePage extends StatelessWidget {
                           child: Divider(
                             color: color.withOpacity(0.5),
                           ),
-                          padding: EdgeInsets.only(
-                              left: 20.0, right: 20.0, bottom: 10.0),
+                          padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
                         ),
                       ],
                     ),
@@ -97,18 +98,14 @@ class OnStatePage extends StatelessWidget {
                         final String title = titleController!.text;
                         final String body = bodyController!.text;
 
-                        final NotificationResult newNotification =
-                            NotificationResult('title: $title | body: $body');
+                        final NotificationResult newNotification = NotificationResult('title: $title | body: $body');
                         print(newNotification.message);
                       },
-                      child: Text("Enviar notificação",
-                          style: TextStyle(color: Colors.white)),
+                      child: Text("Enviar notificação", style: TextStyle(color: Colors.white)),
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.red),
-                        padding: MaterialStateProperty.all(
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 30)),
-                        textStyle:
-                            MaterialStateProperty.all(TextStyle(fontSize: 20)),
+                        padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 10, horizontal: 30)),
+                        textStyle: MaterialStateProperty.all(TextStyle(fontSize: 20)),
                       ),
                     ),
                   ),
