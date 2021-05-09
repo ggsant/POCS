@@ -9,16 +9,16 @@ class CredentialResult {
   factory CredentialResult.empty() => const CredentialResult('', '', '', '');
 
   CredentialResult copyWith({
-    String? id,
     String? title,
     String? appId,
     String? token,
+    String? id,
   }) {
     return CredentialResult(
-      id ?? this.id,
       title ?? this.title,
       appId ?? this.appId,
       token ?? this.token,
+      id ?? this.id,
     );
   }
 }

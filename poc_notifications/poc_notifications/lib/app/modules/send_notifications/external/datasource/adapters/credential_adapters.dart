@@ -1,7 +1,7 @@
 import 'package:poc_notifications/app/modules/send_notifications/domain/entities/credentials_result.dart';
 
 class CredentialAdapters {
-  static CredentialResult fromJson(Map<String, dynamic> json) => CredentialResult(
+  static CredentialResult fromJson(Map json) => CredentialResult(
         json["title"],
         json["appId"],
         json["token"],

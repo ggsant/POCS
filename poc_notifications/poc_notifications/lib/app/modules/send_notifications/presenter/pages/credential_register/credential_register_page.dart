@@ -23,10 +23,6 @@ class CredentialRegisterPageState extends ModularState<CredentialRegisterPage, C
   late FocusNode fnAppId;
   late FocusNode fnToken;
 
-  final TextEditingController titleController = TextEditingController();
-  final TextEditingController appIdController = TextEditingController();
-  final TextEditingController tokenController = TextEditingController();
-
   var globalKeyForForm = GlobalKey<FormState>();
 
   @override
@@ -36,6 +32,17 @@ class CredentialRegisterPageState extends ModularState<CredentialRegisterPage, C
     fnTitulo = FocusNode();
     fnAppId = FocusNode();
     fnToken = FocusNode();
+    controller.observer(
+      onState: (state) => Modular.to.pop(),
+      onError: (error) {
+        final snackbar = SnackBar(
+          content: Text(error.message),
+          backgroundColor: Colors.red,
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(snackbar);
+      },
+    );
   }
 
   @override
@@ -70,7 +77,7 @@ class CredentialRegisterPageState extends ModularState<CredentialRegisterPage, C
                         labelText: 'Titulo',
                         hintText: 'Digite o titulo da sua notificação.',
                         focusNode: fnTitulo,
-                        controller: titleController,
+                        initialValue: credentialResult.title,
                         onFieldSubmitted: (term) {
                           fnTitulo.unfocus();
                           FocusScope.of(context).requestFocus(fnTitulo);
@@ -84,7 +91,7 @@ class CredentialRegisterPageState extends ModularState<CredentialRegisterPage, C
                         labelText: 'AppId',
                         hintText: 'Digite o AppId da sua aplicação.',
                         focusNode: fnAppId,
-                        controller: appIdController,
+                        initialValue: credentialResult.appId,
                         onFieldSubmitted: (term) {
                           fnAppId.unfocus();
                           FocusScope.of(context).requestFocus(fnAppId);
@@ -98,7 +105,7 @@ class CredentialRegisterPageState extends ModularState<CredentialRegisterPage, C
                         labelText: 'Token',
                         hintText: 'Digite o token da sua aplicação.',
                         focusNode: fnToken,
-                        controller: tokenController,
+                        initialValue: credentialResult.token,
                         onFieldSubmitted: (term) {
                           fnToken.unfocus();
                           FocusScope.of(context).requestFocus(fnToken);
@@ -110,20 +117,13 @@ class CredentialRegisterPageState extends ModularState<CredentialRegisterPage, C
                       SizedBox(height: 20),
                       ElevatedButton.icon(
                         onPressed: () {
-                          final String title = titleController.text;
-                          final String appId = appIdController.text;
-                          final String token = tokenController.text;
-
-                          controller.saveUsecase(CredentialResult(title, appId, token, ''));
+                          controller.saveCredentials(credentialResult);
                         },
                         label: Text('Plus One'),
                         icon: Icon(Icons.add),
                       )
                     ],
                   ),
-                ),
-                onError: (context, error) => Center(
-                  child: Text('Salvar credencial'),
                 ),
               )
             ],

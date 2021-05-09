@@ -31,7 +31,8 @@ class HiveService implements LocalStorageService {
   @override
   Future<List<Map>?> get(String key) async {
     final box = await completer.future;
-    return box.get(key);
+    var response = await box.get(key);
+    return response == null ? null : (response as List).map<Map>((e) => e).toList();
   }
 
   @override

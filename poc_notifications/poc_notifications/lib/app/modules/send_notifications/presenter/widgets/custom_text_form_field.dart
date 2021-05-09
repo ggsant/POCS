@@ -7,7 +7,7 @@ class CustomTextFormField extends StatelessWidget {
   final Function(String) onChanged;
   final FocusNode focusNode;
   final Function(String) onFieldSubmitted;
-  final TextEditingController controller;
+  final String initialValue;
 
   const CustomTextFormField({
     Key? key,
@@ -16,7 +16,7 @@ class CustomTextFormField extends StatelessWidget {
     required this.onFieldSubmitted,
     required this.labelText,
     required this.hintText,
-    required this.controller,
+    required this.initialValue,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,6 @@ class CustomTextFormField extends StatelessWidget {
       autofocus: true,
       textInputAction: TextInputAction.next,
       onFieldSubmitted: onFieldSubmitted,
-      controller: controller,
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,

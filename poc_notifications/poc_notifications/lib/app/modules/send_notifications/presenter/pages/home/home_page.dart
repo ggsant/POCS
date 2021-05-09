@@ -1,7 +1,8 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_triple/flutter_triple.dart';
+import 'package:poc_notifications/app/modules/send_notifications/domain/entities/credentials_result.dart';
 import '../credential_register/credential_register_store.dart';
-
 import 'home_store.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,7 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends ModularState<HomePage, HomeStore> {
-  final CredentialRegisterStore controllerCredential = Modular.get();
+  final controllerCredential = Modular.get<CredentialRegisterStore>();
   final Color color = Color.fromRGBO(229, 75, 77, 1);
 
   @override
@@ -30,8 +31,26 @@ class HomePageState extends ModularState<HomePage, HomeStore> {
           )
         ],
       ),
-      body: Column(
-        children: <Widget>[],
+      body: ScopedBuilder(
+        store: controller,
+        onLoading: (_) => Center(child: CircularProgressIndicator()),
+        onState: (_, List<CredentialResult> state) {
+          if (state.isNotEmpty) {
+            return ListView.separated(
+              itemBuilder: (BuildContext context, int index) => ListTile(
+                title: Text(
+                  state[index].title,
+                  style: TextStyle(color: Colors.pink),
+                ),
+              ),
+              separatorBuilder: (BuildContext context, int index) => Divider(),
+              itemCount: controller.listCredentials.length,
+            );
+          } else {
+            return Center(child: Text('Deu ruim'));
+          }
+        },
+        onError: (context, error) => Center(child: Text('Deu ruim')),
       ),
     );
   }
