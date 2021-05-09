@@ -23,6 +23,12 @@ class CredentialRegisterPageState extends ModularState<CredentialRegisterPage, C
   late FocusNode fnAppId;
   late FocusNode fnToken;
 
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController appIdController = TextEditingController();
+  final TextEditingController tokenController = TextEditingController();
+
+  var globalKeyForForm = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
@@ -55,57 +61,66 @@ class CredentialRegisterPageState extends ModularState<CredentialRegisterPage, C
               ScopedBuilder(
                 store: controller,
                 onLoading: (_) => Center(child: CircularProgressIndicator()),
-                onState: (_, state) => Column(
-                  children: [
-                    SizedBox(height: 20),
-                    CustomTextFormField(
-                      labelText: 'Titulo',
-                      hintText: 'Digite o titulo da sua notificação.',
-                      focusNode: fnTitulo,
-                      onFieldSubmitted: (term) {
-                        fnTitulo.unfocus();
-                        FocusScope.of(context).requestFocus(fnTitulo);
-                      },
-                      initialValue: credentialResult.title,
-                      onChanged: (value) {
-                        credentialResult = credentialResult.copyWith(title: value);
-                      },
-                    ),
-                    SizedBox(height: 20),
-                    CustomTextFormField(
-                      labelText: 'AppId',
-                      hintText: 'Digite o AppId da sua aplicação.',
-                      focusNode: fnAppId,
-                      onFieldSubmitted: (term) {
-                        fnAppId.unfocus();
-                        FocusScope.of(context).requestFocus(fnAppId);
-                      },
-                      initialValue: credentialResult.appId,
-                      onChanged: (value) {
-                        credentialResult = credentialResult.copyWith(appId: value);
-                      },
-                    ),
-                    SizedBox(height: 20),
-                    CustomTextFormField(
-                      labelText: 'Token',
-                      hintText: 'Digite o token da sua aplicação.',
-                      focusNode: fnToken,
-                      onFieldSubmitted: (term) {
-                        fnToken.unfocus();
-                        FocusScope.of(context).requestFocus(fnToken);
-                      },
-                      initialValue: credentialResult.token,
-                      onChanged: (value) {
-                        credentialResult = credentialResult.copyWith(token: value);
-                      },
-                    ),
-                    SizedBox(height: 20),
-                    ElevatedButton.icon(
-                      onPressed: () {},
-                      label: Text('Plus One'),
-                      icon: Icon(Icons.add),
-                    )
-                  ],
+                onState: (_, state) => Form(
+                  key: globalKeyForForm,
+                  child: Column(
+                    children: [
+                      SizedBox(height: 20),
+                      CustomTextFormField(
+                        labelText: 'Titulo',
+                        hintText: 'Digite o titulo da sua notificação.',
+                        focusNode: fnTitulo,
+                        controller: titleController,
+                        onFieldSubmitted: (term) {
+                          fnTitulo.unfocus();
+                          FocusScope.of(context).requestFocus(fnTitulo);
+                        },
+                        onChanged: (value) {
+                          credentialResult = credentialResult.copyWith(title: value);
+                        },
+                      ),
+                      SizedBox(height: 20),
+                      CustomTextFormField(
+                        labelText: 'AppId',
+                        hintText: 'Digite o AppId da sua aplicação.',
+                        focusNode: fnAppId,
+                        controller: appIdController,
+                        onFieldSubmitted: (term) {
+                          fnAppId.unfocus();
+                          FocusScope.of(context).requestFocus(fnAppId);
+                        },
+                        onChanged: (value) {
+                          credentialResult = credentialResult.copyWith(appId: value);
+                        },
+                      ),
+                      SizedBox(height: 20),
+                      CustomTextFormField(
+                        labelText: 'Token',
+                        hintText: 'Digite o token da sua aplicação.',
+                        focusNode: fnToken,
+                        controller: tokenController,
+                        onFieldSubmitted: (term) {
+                          fnToken.unfocus();
+                          FocusScope.of(context).requestFocus(fnToken);
+                        },
+                        onChanged: (value) {
+                          credentialResult = credentialResult.copyWith(token: value);
+                        },
+                      ),
+                      SizedBox(height: 20),
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          final String title = titleController.text;
+                          final String appId = appIdController.text;
+                          final String token = tokenController.text;
+
+                          controller.saveUsecase(CredentialResult(title, appId, token, ''));
+                        },
+                        label: Text('Plus One'),
+                        icon: Icon(Icons.add),
+                      )
+                    ],
+                  ),
                 ),
                 onError: (context, error) => Center(
                   child: Text('Salvar credencial'),

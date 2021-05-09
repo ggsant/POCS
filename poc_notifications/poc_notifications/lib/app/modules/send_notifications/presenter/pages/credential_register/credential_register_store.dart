@@ -16,9 +16,11 @@ class CredentialRegisterStore extends NotifierStore<CredentialFailures, bool> {
       var id = Uuid().v1();
       final result = await saveUsecase.call(params.copyWith(id: id));
       executeEither(() async => result.map((r) => true));
+      print('foi sera ? -----------------------------------------');
     } else {
       final result = await updateUsecase.call(params);
       executeEither(() async => result.map((r) => true));
+      print('foi sera ? ---------------------------------------33333--');
     }
   }
 }
