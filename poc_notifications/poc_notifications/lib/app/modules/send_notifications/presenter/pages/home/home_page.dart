@@ -16,6 +16,34 @@ class HomePageState extends ModularState<HomePage, HomeStore> {
   final controllerCredential = Modular.get<CredentialRegisterStore>();
   final Color color = Color.fromRGBO(229, 75, 77, 1);
 
+  Future<void> _showMyDialog(String title, String appId, String token) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('AlertDialog Title'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('This is a demo alert dialog.'),
+                Text('Would you like to approve of this message?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Approve'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,11 +68,14 @@ class HomePageState extends ModularState<HomePage, HomeStore> {
               itemBuilder: (BuildContext context, int index) => ListTile(
                 title: Text(
                   state[index].title,
-                  style: TextStyle(color: Colors.pink),
+                  style: TextStyle(color: Colors.black),
                 ),
+                leading: Icon(Icons.admin_panel_settings_rounded, color: Colors.orangeAccent),
+                trailing: Icon(Icons.keyboard_arrow_right, color: Colors.orangeAccent),
+                onTap: () {},
               ),
               separatorBuilder: (BuildContext context, int index) => Divider(),
-              itemCount: controller.listCredentials.length,
+              itemCount: controller.state.length,
             );
           } else {
             return Center(child: Text('Deu ruim'));

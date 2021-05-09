@@ -6,16 +6,12 @@ import 'package:poc_notifications/app/modules/send_notifications/domain/usecase/
 class HomeStore extends NotifierStore<CredentialFailures, List<CredentialResult>> {
   final FetchCredentialUseCase fetchUseCase;
 
-  List<CredentialResult> listCredentials = [];
-
   HomeStore(this.fetchUseCase) : super([]) {
     fetchCredentials();
   }
 
-  Future<List<CredentialResult>> fetchCredentials() async {
+  Future<List<CredentialResult>?> fetchCredentials() async {
     final result = await fetchUseCase.call();
-    executeEither(() async => result.map((r) => listCredentials));
-    print('foi sera ? ---------------------------------------BUSCOU--');
-    return listCredentials;
+    executeEither(() async => result.map((r) => r));
   }
 }
