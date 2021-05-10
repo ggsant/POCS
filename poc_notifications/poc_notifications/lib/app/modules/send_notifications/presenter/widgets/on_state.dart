@@ -1,37 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import '../utils/colors.dart';
+import '../utils/strings.dart';
+import '../../domain/entities/credentials_result.dart';
+import '../pages/notification/notification_store.dart';
 
-import 'package:poc_notifications/app/modules/send_notifications/domain/entities/credentials_result.dart';
-import 'package:poc_notifications/app/modules/send_notifications/presenter/pages/notification/notification_store.dart';
-
-import '../../domain/entities/notification_result.dart';
-
-class OnStatePage extends StatelessWidget {
+class OnStateNotification extends StatelessWidget {
   final TextEditingController? titleController;
   final TextEditingController? bodyController;
 
   final CredentialResult credentialResult;
 
-  OnStatePage({
+  OnStateNotification({
     Key? key,
     this.titleController,
     this.bodyController,
     required this.credentialResult,
   }) : super(key: key);
 
-  final Color color = Color.fromRGBO(229, 75, 77, 1);
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: color,
+      color: ThemeColors.background,
       child: ListView(
         children: <Widget>[
           SizedBox(height: 30.0),
-          CircleAvatar(
-            child: Image.asset('assets/onesignal2.png'),
-            maxRadius: 80,
-            backgroundColor: Colors.transparent,
-          ),
+          CircleAvatar(child: Image.asset('assets/onesignal2.png'), maxRadius: 80, backgroundColor: ThemeColors.transparentColor),
           Container(
             padding: EdgeInsets.all(10.0),
             child: Stack(
@@ -53,48 +47,34 @@ class OnStatePage extends StatelessWidget {
                           padding: EdgeInsets.symmetric(horizontal: 20.0),
                           child: TextField(
                             controller: titleController,
-                            style: TextStyle(color: Colors.blue),
+                            style: TextStyle(color: ThemeColors.textOrangeColor),
                             decoration: InputDecoration(
-                              hintText: "Titulo da notificação:",
-                              hintStyle: TextStyle(color: color),
+                              hintText: Strings.notificationTitleHintText,
+                              hintStyle: TextStyle(color: ThemeColors.textOrangeColor),
                               border: InputBorder.none,
-                              icon: Icon(
-                                Icons.title,
-                                color: color,
-                              ),
+                              icon: Icon(Icons.title, color: ThemeColors.iconColor),
                             ),
                           ),
                         ),
                         Container(
-                          child: Divider(
-                            color: color.withOpacity(0.5),
-                          ),
-                          padding: EdgeInsets.only(
-                            left: 20.0,
-                            right: 20.0,
-                            bottom: 10.0,
-                          ),
+                          child: Divider(color: ThemeColors.background.withOpacity(0.5)),
+                          padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
                         ),
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 20.0),
                           child: TextField(
                             controller: bodyController,
-                            style: TextStyle(color: Colors.blue),
+                            style: TextStyle(color: ThemeColors.textOrangeColor),
                             decoration: InputDecoration(
-                              hintText: "Conteudo da notificação",
-                              hintStyle: TextStyle(color: color),
+                              hintText: Strings.notificationContentHintText,
+                              hintStyle: TextStyle(color: ThemeColors.textOrangeColor),
                               border: InputBorder.none,
-                              icon: Icon(
-                                Icons.content_copy,
-                                color: color,
-                              ),
+                              icon: Icon(Icons.content_copy, color: ThemeColors.iconColor),
                             ),
                           ),
                         ),
                         Container(
-                          child: Divider(
-                            color: color.withOpacity(0.5),
-                          ),
+                          child: Divider(color: ThemeColors.background.withOpacity(0.5)),
                           padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
                         ),
                       ],
@@ -111,9 +91,9 @@ class OnStatePage extends StatelessWidget {
                         final String body = bodyController!.text;
                         Modular.get<NotificationStore>().sendNotifications(title, body, credentialResult);
                       },
-                      child: Text("Enviar notificação", style: TextStyle(color: Colors.white)),
+                      child: Text(Strings.buttonSendCredential),
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.red),
+                        backgroundColor: MaterialStateProperty.all(ThemeColors.background),
                         padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 10, horizontal: 30)),
                         textStyle: MaterialStateProperty.all(TextStyle(fontSize: 20)),
                       ),

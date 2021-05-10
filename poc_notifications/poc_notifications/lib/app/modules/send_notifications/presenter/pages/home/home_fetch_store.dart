@@ -3,14 +3,14 @@ import 'package:poc_notifications/app/modules/send_notifications/domain/entities
 import 'package:poc_notifications/app/modules/send_notifications/domain/errors/credentials_failures/credential_failures.dart';
 import 'package:poc_notifications/app/modules/send_notifications/domain/usecase/fetch_credential_usecase.dart';
 
-class FetchStore extends NotifierStore<CredentialFailures, List<CredentialResult>> {
+class HomeFetchStore extends NotifierStore<CredentialFailures, List<CredentialResult>> {
   final FetchCredentialUseCase fetchUseCase;
 
-  FetchStore(this.fetchUseCase) : super([]) {
+  HomeFetchStore(this.fetchUseCase) : super([]) {
     fetchCredentials();
   }
 
-  void fetchCredentials() {
+  void fetchCredentials() async {
     executeEither(() => fetchUseCase());
   }
 }

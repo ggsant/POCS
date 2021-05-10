@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:poc_notifications/app/modules/send_notifications/domain/entities/credentials_result.dart';
+import '../../../domain/entities/credentials_result.dart';
+import '../../utils/colors.dart';
+import '../../utils/strings.dart';
 import '../../../domain/entities/notification_result.dart';
 import '../../../domain/errors/notifications_failures/notifications_failures.dart';
 import '../../widgets/on_state.dart';
@@ -20,10 +22,11 @@ class NotificationPage extends StatefulWidget {
 class _NotificationPageState extends ModularState<NotificationPage, NotificationStore> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _bodyController = TextEditingController();
+
   final overlayEntry = OverlayEntry(builder: (BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      color: Colors.black12,
+      color: ThemeColors.overlayColor,
       child: CircularProgressIndicator(),
     );
   });
@@ -36,8 +39,8 @@ class _NotificationPageState extends ModularState<NotificationPage, Notification
     controller.observer(
       onState: (state) {
         final snackbar = SnackBar(
-          content: Text('Menssagem enviada com sucesso!'),
-          backgroundColor: Colors.green,
+          content: Text(Strings.successMessageText),
+          backgroundColor: ThemeColors.succesSnackbar,
         );
 
         ScaffoldMessenger.of(context).showSnackBar(snackbar);
@@ -45,7 +48,7 @@ class _NotificationPageState extends ModularState<NotificationPage, Notification
       onError: (error) {
         final snackbar = SnackBar(
           content: Text(error.message),
-          backgroundColor: Colors.red,
+          backgroundColor: ThemeColors.errorSnackbar,
         );
 
         ScaffoldMessenger.of(context).showSnackBar(snackbar);
@@ -66,7 +69,7 @@ class _NotificationPageState extends ModularState<NotificationPage, Notification
       body: ScopedBuilder<NotificationStore, NotificationsFailures, NotificationResult>(
         store: controller,
         onState: (_, state) {
-          return OnStatePage(
+          return OnStateNotification(
             titleController: _titleController,
             bodyController: _bodyController,
             credentialResult: widget.credentialResult,

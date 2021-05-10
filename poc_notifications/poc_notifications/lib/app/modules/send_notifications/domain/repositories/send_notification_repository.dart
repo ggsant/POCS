@@ -4,6 +4,5 @@ import '../errors/notifications_failures/notifications_failures.dart';
 import '../models/notification_params.dart';
 
 abstract class SendNotificationRepository {
-  Future<Either<NotificationsFailures, NotificationResult>> sendNotifications(
-      NotificationParams params);
+  Future<Either<NotificationsFailures, NotificationResult>> sendNotifications(NotificationParams params);
 }

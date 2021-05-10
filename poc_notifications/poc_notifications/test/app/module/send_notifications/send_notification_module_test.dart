@@ -21,7 +21,7 @@ void main() {
   final _requestOptionsMock = RequestOptionsMock();
 
   setUpAll(() {
-    initModule(NotificationModule(), replaceBinds: [Bind.factory<Dio>((i) => dio)], initialModule: true);
+    initModule(NotificationModule(), replaceBinds: [Bind.factory<MockDio>((i) => dio)], initialModule: true);
   });
 
   tearDown(() {
