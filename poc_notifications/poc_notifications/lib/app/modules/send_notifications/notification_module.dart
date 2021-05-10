@@ -16,6 +16,7 @@ import 'infra/datasource/send_notification.dart';
 import 'infra/repositories/send_notifications_repository.dart';
 import 'presenter/pages/credential_register/credential_register_store.dart';
 import 'presenter/pages/home/home_page.dart';
+import 'presenter/pages/notification/notification_page.dart';
 import 'presenter/pages/notification/notification_store.dart';
 
 import 'domain/repositories/send_notification_repository.dart';
@@ -24,7 +25,8 @@ class NotificationModule extends Module {
   @override
   final List<Bind> binds = [
     Bind.singleton<NotificationStore>((i) => NotificationStore(i())),
-    Bind.singleton<CredentialRegisterStore>((i) => CredentialRegisterStore(i(), i())),
+    Bind.singleton<CredentialRegisterStore>((i) => CredentialRegisterStore(i(), i(), i())),
+
     //repo
     Bind.factory<CredentialRepository>((i) => CredentialRepositoryImpl(i())),
 
@@ -46,7 +48,8 @@ class NotificationModule extends Module {
 
   @override
   final List<ModularRoute> routes = [
-    ChildRoute('/credential_register', child: (_, args) => CredentialRegisterPage()),
+    ChildRoute<bool>('/credential_register', child: (_, args) => CredentialRegisterPage(credentialResult: args.data)),
+    ChildRoute('/notification_page', child: (_, args) => NotificationPage(credentialResult: args.data)),
     ChildRoute('/', child: (_, __) => HomePage()),
   ];
 }

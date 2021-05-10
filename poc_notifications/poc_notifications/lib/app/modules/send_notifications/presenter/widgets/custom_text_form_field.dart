@@ -26,6 +26,7 @@ class CustomTextFormField extends StatelessWidget {
       autofocus: true,
       textInputAction: TextInputAction.next,
       onFieldSubmitted: onFieldSubmitted,
+      initialValue: initialValue,
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,

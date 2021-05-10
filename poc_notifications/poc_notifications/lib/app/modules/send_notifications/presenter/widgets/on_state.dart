@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+
+import 'package:poc_notifications/app/modules/send_notifications/domain/entities/credentials_result.dart';
+import 'package:poc_notifications/app/modules/send_notifications/presenter/pages/notification/notification_store.dart';
+
 import '../../domain/entities/notification_result.dart';
 
 class OnStatePage extends StatelessWidget {
   final TextEditingController? titleController;
   final TextEditingController? bodyController;
 
-  OnStatePage({Key? key, this.titleController, this.bodyController}) : super(key: key);
+  final CredentialResult credentialResult;
+
+  OnStatePage({
+    Key? key,
+    this.titleController,
+    this.bodyController,
+    required this.credentialResult,
+  }) : super(key: key);
 
   final Color color = Color.fromRGBO(229, 75, 77, 1);
   @override
@@ -97,9 +109,7 @@ class OnStatePage extends StatelessWidget {
                       onPressed: () {
                         final String title = titleController!.text;
                         final String body = bodyController!.text;
-
-                        final NotificationResult newNotification = NotificationResult('title: $title | body: $body');
-                        print(newNotification.message);
+                        Modular.get<NotificationStore>().sendNotifications(title, body, credentialResult);
                       },
                       child: Text("Enviar notificação", style: TextStyle(color: Colors.white)),
                       style: ButtonStyle(

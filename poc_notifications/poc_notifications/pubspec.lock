@@ -255,7 +255,7 @@ packages:
       name: flutter_triple
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.5+1"
+    version: "1.0.6"
   frontend_server_client:
     dependency: transitive
     description:
@@ -617,7 +617,7 @@ packages:
       name: triple
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.2"
   triple_test:
     dependency: "direct dev"
     description:

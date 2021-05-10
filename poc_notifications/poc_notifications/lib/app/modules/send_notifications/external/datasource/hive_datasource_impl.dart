@@ -13,13 +13,13 @@ class HiveDataSouceImpl implements HiveDataSouce {
   @override
   Future<void> saveCredential(CredentialResult params) async {
     var listCredential = await service.get(LIST_CREDENTIAL_KEY) ?? [];
-    listCredential.add(CredentialAdapters.toJson(params));
-    service.save(LIST_CREDENTIAL_KEY, listCredential);
+    listCredential.insert(0, CredentialAdapters.toJson(params));
+    await service.save(LIST_CREDENTIAL_KEY, listCredential);
   }
 
   @override
   Future<List<CredentialResult>> fetchCredential() async {
-    var listCredential = (await service.get(LIST_CREDENTIAL_KEY)) as List;
+    var listCredential = await service.get(LIST_CREDENTIAL_KEY) ?? [];
     return listCredential.map((e) => CredentialAdapters.fromJson(e)).toList();
   }
 
@@ -32,13 +32,13 @@ class HiveDataSouceImpl implements HiveDataSouce {
     } else {
       listCredential[indexCredential] = CredentialAdapters.toJson(params);
     }
-    service.save(LIST_CREDENTIAL_KEY, listCredential);
+    await service.save(LIST_CREDENTIAL_KEY, listCredential);
   }
 
   @override
   Future<void> deleteCredential(String id) async {
     var listCredential = await service.get(LIST_CREDENTIAL_KEY) ?? [];
     listCredential.removeWhere((element) => element['id'] == id);
-    service.save(LIST_CREDENTIAL_KEY, listCredential);
+    await service.save(LIST_CREDENTIAL_KEY, listCredential);
   }
 }

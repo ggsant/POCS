@@ -33,7 +33,7 @@ class CredentialRegisterPageState extends ModularState<CredentialRegisterPage, C
     fnAppId = FocusNode();
     fnToken = FocusNode();
     controller.observer(
-      onState: (state) => Modular.to.pop(),
+      onState: (state) => Modular.to.pop<bool>(true),
       onError: (error) {
         final snackbar = SnackBar(
           content: Text(error.message),
@@ -115,13 +115,27 @@ class CredentialRegisterPageState extends ModularState<CredentialRegisterPage, C
                         },
                       ),
                       SizedBox(height: 20),
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          controller.saveCredentials(credentialResult);
-                        },
-                        label: Text('Plus One'),
-                        icon: Icon(Icons.add),
-                      )
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton.icon(
+                            onPressed: () {
+                              controller.saveCredentials(credentialResult);
+                            },
+                            label: Text(credentialResult.id.isEmpty ? 'Salvar Credêncial' : 'Salvar edição'),
+                            icon: Icon(Icons.save_alt),
+                          ),
+                          SizedBox(width: 20),
+                          if (credentialResult.id.isNotEmpty)
+                            ElevatedButton.icon(
+                              onPressed: () {
+                                controller.deleteCredentials(credentialResult);
+                              },
+                              label: Text('Excluir Credêncial'),
+                              icon: Icon(Icons.delete),
+                            )
+                        ],
+                      ),
                     ],
                   ),
                 ),
