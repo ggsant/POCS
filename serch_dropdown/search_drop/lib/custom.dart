@@ -68,11 +68,6 @@ class SearchableDropdown<T> extends StatefulWidget {
   final TextInputType keyboardType;
   final bool readOnly;
   // apagar
-  final dynamic closeButton;
-  final Color iconEnabledColor;
-  final Color iconDisabledColor;
-  final Function searchFn;
-  final Function onClear;
   final Function selectedValueWidgetFn;
   final Function validator;
   final bool multipleSelection;
@@ -133,19 +128,14 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.searchHint,
     this.hint,
     this.icon,
-    this.iconEnabledColor,
-    this.iconDisabledColor,
     this.iconSize = 24.0,
     this.isExpanded = false,
     this.isCaseSensitiveSearch = false,
-    this.closeButton,
     this.displayClearIcon = true,
     this.clearIcon = const Icon(Icons.clear),
-    this.onClear,
     this.selectedValueWidgetFn,
     this.keyboardType = TextInputType.text,
     this.validator,
-    this.searchFn,
     this.multipleSelection = false,
     this.selectedItems = const [],
     this.displayItem,
@@ -169,19 +159,14 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.hint,
     this.menuConstraints,
     this.icon = const Icon(Icons.arrow_drop_down),
-    this.iconEnabledColor,
-    this.iconDisabledColor,
     this.iconSize = 24.0,
     this.isExpanded = false,
     this.isCaseSensitiveSearch = false,
-    this.closeButton = "Close",
     this.displayClearIcon = false,
     this.clearIcon = const Icon(Icons.clear),
-    this.onClear,
     this.selectedValueWidgetFn,
     this.keyboardType = TextInputType.text,
     this.validator,
-    this.searchFn,
     this.multipleSelection = false,
     this.selectedItems = const [],
     this.displayItem,
@@ -205,39 +190,6 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
       widget.items != null &&
       widget.items.isNotEmpty &&
       widget.onChanged != null;
-
-  Color get _enabledIconColor {
-    if (widget.iconEnabledColor != null) {
-      return widget.iconEnabledColor;
-    }
-    switch (Theme.of(context).brightness) {
-      case Brightness.light:
-        return Colors.grey.shade700;
-      case Brightness.dark:
-        return Colors.white70;
-    }
-    return Colors.grey.shade700;
-  }
-
-  Color get _disabledIconColor {
-    if (widget.iconDisabledColor != null) {
-      return widget.iconDisabledColor;
-    }
-    switch (Theme.of(context).brightness) {
-      case Brightness.light:
-        return Colors.grey.shade400;
-      case Brightness.dark:
-        return Colors.white10;
-    }
-    return Colors.grey.shade400;
-  }
-
-  Color get _iconColor {
-    // These colors are not defined in the Material Design spec.
-    return (_enabled && !(widget.readOnly ?? false)
-        ? _enabledIconColor
-        : _disabledIconColor);
-  }
 
   bool get valid {
     if (widget.validator == null) {
@@ -296,9 +248,7 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
       items: widget.items,
       hint: prepareWidget(widget.searchHint),
       isCaseSensitiveSearch: widget.isCaseSensitiveSearch,
-      closeButton: widget.closeButton,
       keyboardType: widget.keyboardType,
-      searchFn: widget.searchFn,
       multipleSelection: widget.multipleSelection,
       selectedItems: selectedItems,
       displayItem: widget.displayItem,
@@ -381,7 +331,7 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
                 : innerItemsWidget,
             IconTheme(
               data: IconThemeData(
-                color: _iconColor,
+                color: Colors.black,
                 size: widget.iconSize,
               ),
               child: prepareWidget(widget.icon, parameter: selectedResult) ??
@@ -415,10 +365,7 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
                         children: <Widget>[
                           IconTheme(
                             data: IconThemeData(
-                              color:
-                                  hasSelection && _enabled && !widget.readOnly
-                                      ? _enabledIconColor
-                                      : _disabledIconColor,
+                              color: Colors.black,
                               size: widget.iconSize,
                             ),
                             child: widget.clearIcon ?? Icon(Icons.clear),
@@ -483,9 +430,7 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
     if (widget.onChanged != null) {
       widget.onChanged(selectedResult);
     }
-    if (widget.onClear != null) {
-      widget.onClear();
-    }
+
     setState(() {});
   }
 }
