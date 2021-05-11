@@ -67,9 +67,8 @@ class SearchableDropdown<T> extends StatefulWidget {
   final Icon clearIcon;
   final TextInputType keyboardType;
   final bool readOnly;
-  // apagar
   final Function selectedValueWidgetFn;
-  final Function validator;
+  // apagar
   final bool multipleSelection;
   final List<int> selectedItems;
   final Function displayItem;
@@ -135,7 +134,6 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.clearIcon = const Icon(Icons.clear),
     this.selectedValueWidgetFn,
     this.keyboardType = TextInputType.text,
-    this.validator,
     this.multipleSelection = false,
     this.selectedItems = const [],
     this.displayItem,
@@ -166,7 +164,6 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.clearIcon = const Icon(Icons.clear),
     this.selectedValueWidgetFn,
     this.keyboardType = TextInputType.text,
-    this.validator,
     this.multipleSelection = false,
     this.selectedItems = const [],
     this.displayItem,
@@ -190,13 +187,6 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
       widget.items != null &&
       widget.items.isNotEmpty &&
       widget.onChanged != null;
-
-  bool get valid {
-    if (widget.validator == null) {
-      return (true);
-    }
-    return (widget.validator(selectedResult) == null);
-  }
 
   bool get hasSelection {
     return (selectedItems != null && selectedItems.isNotEmpty);
@@ -252,7 +242,6 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
       multipleSelection: widget.multipleSelection,
       selectedItems: selectedItems,
       displayItem: widget.displayItem,
-      validator: widget.validator,
       dialogBox: widget.dialogBox,
       displayMenu: displayMenu,
       menuConstraints: widget.menuConstraints,
@@ -380,10 +369,6 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
     );
 
     final double bottom = 8.0;
-    var validatorOutput;
-    if (widget.validator != null) {
-      validatorOutput = widget.validator(selectedResult);
-    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -404,22 +389,16 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
-                        color: valid ? Color(0xFFBDBDBD) : Colors.red,
-                        width: 0.0),
+                      color: Color(0xFFBDBDBD),
+                      width: 0.0,
+                    ),
                   ),
                 ),
               ),
             ),
           ],
         ),
-        valid
-            ? SizedBox.shrink()
-            : validatorOutput is String
-                ? Text(
-                    validatorOutput,
-                    style: TextStyle(color: Colors.red, fontSize: 13),
-                  )
-                : validatorOutput,
+        SizedBox.shrink(),
         displayMenu.value ? menuWidget : SizedBox.shrink(),
       ],
     );
