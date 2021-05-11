@@ -59,8 +59,6 @@ class SearchableDropdown<T> extends StatefulWidget {
   final dynamic searchHint;
   final dynamic hint;
   final dynamic icon;
-  final dynamic underline;
-  final dynamic doneButton;
   final dynamic label;
   final dynamic closeButton;
   final bool displayClearIcon;
@@ -126,23 +124,13 @@ class SearchableDropdown<T> extends StatefulWidget {
     dynamic disabledHint,
     dynamic icon = const Icon(Icons.arrow_drop_down),
     dynamic underline,
-    dynamic doneButton,
-    dynamic label,
-    dynamic closeButton = "Close",
     bool displayClearIcon = true,
     Icon clearIcon = const Icon(Icons.clear),
-    Color iconEnabledColor,
-    Color iconDisabledColor,
     double iconSize = 24.0,
     bool isExpanded = false,
     bool isCaseSensitiveSearch = false,
-    Function searchFn,
-    Function onClear,
-    Function selectedValueWidgetFn,
     TextInputType keyboardType = TextInputType.text,
-    Function validator,
     bool assertUniqueValue = true,
-    Function displayItem,
     bool dialogBox = true,
     BoxConstraints menuConstraints,
     bool readOnly = false,
@@ -157,24 +145,13 @@ class SearchableDropdown<T> extends StatefulWidget {
       searchHint: searchHint,
       hint: hint,
       icon: icon,
-      underline: underline,
-      iconEnabledColor: iconEnabledColor,
-      iconDisabledColor: iconDisabledColor,
       iconSize: iconSize,
       isExpanded: isExpanded,
       isCaseSensitiveSearch: isCaseSensitiveSearch,
-      closeButton: closeButton,
       displayClearIcon: displayClearIcon,
       clearIcon: clearIcon,
-      onClear: onClear,
-      selectedValueWidgetFn: selectedValueWidgetFn,
       keyboardType: keyboardType,
-      validator: validator,
-      label: label,
-      searchFn: searchFn,
       multipleSelection: false,
-      doneButton: doneButton,
-      displayItem: displayItem,
       dialogBox: dialogBox,
       menuConstraints: menuConstraints,
       readOnly: readOnly,
@@ -234,12 +211,7 @@ class SearchableDropdown<T> extends StatefulWidget {
     double iconSize = 24.0,
     bool isExpanded = false,
     bool isCaseSensitiveSearch = false,
-    Function searchFn,
-    Function onClear,
-    Function selectedValueWidgetFn,
     TextInputType keyboardType = TextInputType.text,
-    Function validator,
-    Function displayItem,
     bool dialogBox = true,
     BoxConstraints menuConstraints,
     bool readOnly = false,
@@ -252,7 +224,6 @@ class SearchableDropdown<T> extends StatefulWidget {
       searchHint: searchHint,
       hint: hint,
       icon: icon,
-      underline: underline,
       iconEnabledColor: iconEnabledColor,
       iconDisabledColor: iconDisabledColor,
       iconSize: iconSize,
@@ -261,17 +232,11 @@ class SearchableDropdown<T> extends StatefulWidget {
       closeButton: closeButton,
       displayClearIcon: displayClearIcon,
       clearIcon: clearIcon,
-      onClear: onClear,
-      selectedValueWidgetFn: selectedValueWidgetFn,
       keyboardType: keyboardType,
-      validator: validator,
       label: label,
-      searchFn: searchFn,
       multipleSelection: true,
       selectedItems: selectedItems,
-      doneButton: doneButton,
       onChanged: onChanged,
-      displayItem: displayItem,
       dialogBox: dialogBox,
       menuConstraints: menuConstraints,
       readOnly: readOnly,
@@ -288,7 +253,6 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.searchHint,
     this.hint,
     this.icon,
-    this.underline,
     this.iconEnabledColor,
     this.iconDisabledColor,
     this.iconSize = 24.0,
@@ -305,7 +269,6 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.searchFn,
     this.multipleSelection = false,
     this.selectedItems = const [],
-    this.doneButton,
     this.displayItem,
     this.dialogBox,
     this.menuConstraints,
@@ -314,7 +277,6 @@ class SearchableDropdown<T> extends StatefulWidget {
   })  : assert(items != null),
         assert(iconSize != null),
         assert(isExpanded != null),
-        assert(!multipleSelection || doneButton != null),
         assert(menuConstraints == null || !dialogBox),
         super(key: key);
 
@@ -327,7 +289,6 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.searchHint,
     this.hint,
     this.icon = const Icon(Icons.arrow_drop_down),
-    this.underline,
     this.iconEnabledColor,
     this.iconDisabledColor,
     this.iconSize = 24.0,
@@ -344,7 +305,6 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.searchFn,
     this.multipleSelection = false,
     this.selectedItems = const [],
-    this.doneButton,
     this.displayItem,
     this.dialogBox = true,
     this.menuConstraints,
@@ -353,7 +313,6 @@ class SearchableDropdown<T> extends StatefulWidget {
   })  : assert(items != null),
         assert(iconSize != null),
         assert(isExpanded != null),
-        assert(!multipleSelection || doneButton != null),
         assert(menuConstraints == null || !dialogBox),
         super(key: key);
 
@@ -473,7 +432,6 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
       searchFn: widget.searchFn,
       multipleSelection: widget.multipleSelection,
       selectedItems: selectedItems,
-      doneButton: widget.doneButton,
       displayItem: widget.displayItem,
       validator: widget.validator,
       dialogBox: widget.dialogBox,
@@ -625,25 +583,21 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
               padding: EdgeInsets.all(10.0),
               child: result,
             ),
-            widget.underline is NotGiven
-                ? SizedBox.shrink()
-                : Positioned(
-                    left: 0.0,
-                    right: 0.0,
-                    bottom: bottom,
-                    child: prepareWidget(widget.underline,
-                            parameter: selectedResult) ??
-                        Container(
-                          height: 1.0,
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
-                                      color: valid
-                                          ? Color(0xFFBDBDBD)
-                                          : Colors.red,
-                                      width: 0.0))),
-                        ),
+            Positioned(
+              left: 0.0,
+              right: 0.0,
+              bottom: bottom,
+              child: Container(
+                height: 1.0,
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                        color: valid ? Color(0xFFBDBDBD) : Colors.red,
+                        width: 0.0),
                   ),
+                ),
+              ),
+            ),
           ],
         ),
         valid
