@@ -55,64 +55,33 @@ class SearchableDropdown<T> extends StatefulWidget {
   final List<DropdownMenuItem<T>> items;
   final Function onChanged;
   final T value;
-  final TextStyle style;
   final dynamic searchHint;
+  final bool dialogBox;
   final dynamic hint;
+  final BoxConstraints menuConstraints;
   final dynamic icon;
-  final dynamic label;
-  final dynamic closeButton;
-  final bool displayClearIcon;
-  final Icon clearIcon;
-  final Color iconEnabledColor;
-  final Color iconDisabledColor;
   final double iconSize;
   final bool isExpanded;
   final bool isCaseSensitiveSearch;
+  final bool displayClearIcon;
+  final Icon clearIcon;
+  final TextInputType keyboardType;
+  final bool readOnly;
+  // apagar
+  final TextStyle style;
+  final dynamic label;
+  final dynamic closeButton;
+  final Color iconEnabledColor;
+  final Color iconDisabledColor;
   final Function searchFn;
   final Function onClear;
   final Function selectedValueWidgetFn;
-  final TextInputType keyboardType;
   final Function validator;
   final bool multipleSelection;
   final List<int> selectedItems;
   final Function displayItem;
-  final bool dialogBox;
-  final BoxConstraints menuConstraints;
-  final bool readOnly;
   final Color menuBackgroundColor;
 
-  /// Search choices Widget with a single choice that opens a dialog or a menu to let the user do the selection conveniently with a search.
-  ///
-  /// @param items with __child__: [Widget] displayed ; __value__: any object with .toString() used to match search keyword.
-  /// @param onChanged [Function] with parameter: __value__ not returning executed after the selection is done.
-  /// @param value value to be preselected.
-  /// @param style used for the hint if it is given is [String].
-  /// @param searchHint [String]|[Widget]|[Function] with no parameter returning [String]|[Widget] displayed at the top of the search dialog box.
-  /// @param hint [String]|[Widget]|[Function] with no parameter returning [String]|[Widget] displayed before any value is selected or after the selection is cleared.
-  /// @param disabledHint [String]|[Widget]|[Function] with no parameter returning [String]|[Widget] displayed instead of hint when the widget is displayed.
-  /// @param icon [String]|[Widget]|[Function] with parameter: __value__ returning [String]|[Widget] displayed next to the selected item or the hint if none.
-  /// @param underline [String]|[Widget]|[Function] with parameter: __value__ returning [String]|[Widget] displayed below the selected item or the hint if none.
-  /// @param doneButton [String]|[Widget]|[Function] with parameter: __value__ returning [String]|[Widget] displayed at the top of the search dialog box.
-  /// @param label [String]|[Widget]|[Function] with parameter: __value__ returning [String]|[Widget] displayed above the selected item or the hint if none.
-  /// @param closeButton [String]|[Widget]|[Function] with parameter: __value__ returning [String]|[Widget] displayed at the bottom of the search dialog box.
-  /// @param displayClearIcon whether or not to display an icon to clear the selected value.
-  /// @param clearIcon [Icon] to be used for clearing the selected value.
-  /// @param iconEnabledColor [Color] to be used for enabled icons.
-  /// @param iconDisabledColor [Color] to be used for disabled icons.
-  /// @param iconSize for the icons next to the selected value (icon and clearIcon).
-  /// @param isExpanded can be necessary to avoid pixel overflows (zebra symptom).
-  /// @param isCaseSensitiveSearch only used when searchFn is not specified.
-  /// @param searchFn [Function] with parameters: __keyword__, __items__ returning [List<int>] as the list of indexes for the items to be displayed.
-  /// @param onClear [Function] with no parameter not returning executed when the clear icon is tapped.
-  /// @param selectedValueWidgetFn [Function] with parameter: __item__ returning [Widget] to be used to display the selected value.
-  /// @param keyboardType used for the search.
-  /// @param validator [Function] with parameter: __value__ returning [String] displayed below selected value when not valid and null when valid.
-  /// @param assertUniqueValue whether to run a consistency check of the list of items.
-  /// @param displayItem [Function] with parameters: __item__, __selected__ returning [Widget] to be displayed in the search list.
-  /// @param dialogBox whether the search should be displayed as a dialog box or as a menu below the selected value if any.
-  /// @param menuConstraints [BoxConstraints] used to define the zone where to display the search menu. Example: BoxConstraints.tight(Size.fromHeight(250)) . Not to be used for dialogBox = true.
-  /// @param readOnly [bool] whether to let the user choose the value to select or just present the selected value if any.
-  /// @param menuBackgroundColor [Color] background color of the menu whether in dialog box or menu mode.
   factory SearchableDropdown.single({
     Key key,
     @required List<DropdownMenuItem<T>> items,
@@ -152,91 +121,6 @@ class SearchableDropdown<T> extends StatefulWidget {
       clearIcon: clearIcon,
       keyboardType: keyboardType,
       multipleSelection: false,
-      dialogBox: dialogBox,
-      menuConstraints: menuConstraints,
-      readOnly: readOnly,
-      menuBackgroundColor: menuBackgroundColor,
-    ));
-  }
-
-  /// Search choices Widget with a multiple choice that opens a dialog or a menu to let the user do the selection conveniently with a search.
-  ///
-  /// @param items with __child__: [Widget] displayed ; __value__: any object with .toString() used to match search keyword.
-  /// @param onChanged [Function] with parameter: __selectedItems__ not returning executed after the selection is done.
-  /// @param selectedItems indexes of items to be preselected.
-  /// @param style used for the hint if it is given is [String].
-  /// @param searchHint [String]|[Widget]|[Function] with no parameter returning [String]|[Widget] displayed at the top of the search dialog box.
-  /// @param hint [String]|[Widget]|[Function] with no parameter returning [String]|[Widget] displayed before any value is selected or after the selection is cleared.
-  /// @param disabledHint [String]|[Widget]|[Function] with no parameter returning [String]|[Widget] displayed instead of hint when the widget is displayed.
-  /// @param icon [String]|[Widget]|[Function] with parameter: __selectedItems__ returning [String]|[Widget] displayed next to the selected items or the hint if none.
-  /// @param underline [String]|[Widget]|[Function] with parameter: __selectedItems__ returning [String]|[Widget] displayed below the selected items or the hint if none.
-  /// @param doneButton [String]|[Widget]|[Function] with parameter: __selectedItems__ returning [String]|[Widget] displayed at the top of the search dialog box. Cannot be null in multiple selection mode.
-  /// @param label [String]|[Widget]|[Function] with parameter: __selectedItems__ returning [String]|[Widget] displayed above the selected items or the hint if none.
-  /// @param closeButton [String]|[Widget]|[Function] with parameter: __selectedItems__ returning [String]|[Widget] displayed at the bottom of the search dialog box.
-  /// @param displayClearIcon whether or not to display an icon to clear the selected values.
-  /// @param clearIcon [Icon] to be used for clearing the selected values.
-  /// @param iconEnabledColor [Color] to be used for enabled icons.
-  /// @param iconDisabledColor [Color] to be used for disabled icons.
-  /// @param iconSize for the icons next to the selected values (icon and clearIcon).
-  /// @param isExpanded can be necessary to avoid pixel overflows (zebra symptom).
-  /// @param isCaseSensitiveSearch only used when searchFn is not specified.
-  /// @param searchFn [Function] with parameters: __keyword__, __items__ returning [List<int>] as the list of indexes for the items to be displayed.
-  /// @param onClear [Function] with no parameter not returning executed when the clear icon is tapped.
-  /// @param selectedValueWidgetFn [Function] with parameter: __item__ returning [Widget] to be used to display the selected values.
-  /// @param keyboardType used for the search.
-  /// @param validator [Function] with parameter: __selectedItems__ returning [String] displayed below selected values when not valid and null when valid.
-  /// @param displayItem [Function] with parameters: __item__, __selected__ returning [Widget] to be displayed in the search list.
-  /// @param dialogBox whether the search should be displayed as a dialog box or as a menu below the selected values if any.
-  /// @param menuConstraints [BoxConstraints] used to define the zone where to display the search menu. Example: BoxConstraints.tight(Size.fromHeight(250)) . Not to be used for dialogBox = true.
-  /// @param readOnly [bool] whether to let the user choose the value to select or just present the selected value if any.
-  /// @param menuBackgroundColor [Color] background color of the menu whether in dialog box or menu mode.
-  factory SearchableDropdown.multiple({
-    Key key,
-    @required List<DropdownMenuItem<T>> items,
-    @required Function onChanged,
-    List<int> selectedItems = const [],
-    TextStyle style,
-    dynamic searchHint,
-    dynamic hint,
-    dynamic disabledHint,
-    dynamic icon = const Icon(Icons.arrow_drop_down),
-    dynamic underline,
-    dynamic doneButton = "Done",
-    dynamic label,
-    dynamic closeButton = "Close",
-    bool displayClearIcon = true,
-    Icon clearIcon = const Icon(Icons.clear),
-    Color iconEnabledColor,
-    Color iconDisabledColor,
-    double iconSize = 24.0,
-    bool isExpanded = false,
-    bool isCaseSensitiveSearch = false,
-    TextInputType keyboardType = TextInputType.text,
-    bool dialogBox = true,
-    BoxConstraints menuConstraints,
-    bool readOnly = false,
-    Color menuBackgroundColor,
-  }) {
-    return (SearchableDropdown._(
-      key: key,
-      items: items,
-      style: style,
-      searchHint: searchHint,
-      hint: hint,
-      icon: icon,
-      iconEnabledColor: iconEnabledColor,
-      iconDisabledColor: iconDisabledColor,
-      iconSize: iconSize,
-      isExpanded: isExpanded,
-      isCaseSensitiveSearch: isCaseSensitiveSearch,
-      closeButton: closeButton,
-      displayClearIcon: displayClearIcon,
-      clearIcon: clearIcon,
-      keyboardType: keyboardType,
-      label: label,
-      multipleSelection: true,
-      selectedItems: selectedItems,
-      onChanged: onChanged,
       dialogBox: dialogBox,
       menuConstraints: menuConstraints,
       readOnly: readOnly,
@@ -285,9 +169,10 @@ class SearchableDropdown<T> extends StatefulWidget {
     @required this.items,
     @required this.onChanged,
     this.value,
-    this.style,
     this.searchHint,
+    this.dialogBox = true,
     this.hint,
+    this.menuConstraints,
     this.icon = const Icon(Icons.arrow_drop_down),
     this.iconEnabledColor,
     this.iconDisabledColor,
@@ -304,10 +189,9 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.label,
     this.searchFn,
     this.multipleSelection = false,
+    this.style,
     this.selectedItems = const [],
     this.displayItem,
-    this.dialogBox = true,
-    this.menuConstraints,
     this.readOnly = false,
     this.menuBackgroundColor,
   })  : assert(items != null),
