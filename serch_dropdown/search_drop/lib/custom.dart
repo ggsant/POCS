@@ -69,7 +69,6 @@ class SearchableDropdown<T> extends StatefulWidget {
   final bool readOnly;
   final Function selectedValueWidgetFn;
   // apagar
-  final bool multipleSelection;
   final List<int> selectedItems;
   final Function displayItem;
   final Color menuBackgroundColor;
@@ -111,7 +110,6 @@ class SearchableDropdown<T> extends StatefulWidget {
       displayClearIcon: displayClearIcon,
       clearIcon: clearIcon,
       keyboardType: keyboardType,
-      multipleSelection: false,
       dialogBox: dialogBox,
       menuConstraints: menuConstraints,
       readOnly: readOnly,
@@ -134,7 +132,6 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.clearIcon = const Icon(Icons.clear),
     this.selectedValueWidgetFn,
     this.keyboardType = TextInputType.text,
-    this.multipleSelection = false,
     this.selectedItems = const [],
     this.displayItem,
     this.dialogBox,
@@ -164,7 +161,6 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.clearIcon = const Icon(Icons.clear),
     this.selectedValueWidgetFn,
     this.keyboardType = TextInputType.text,
-    this.multipleSelection = false,
     this.selectedItems = const [],
     this.displayItem,
     this.readOnly = false,
@@ -193,11 +189,9 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
   }
 
   dynamic get selectedResult {
-    return (widget.multipleSelection
-        ? selectedItems
-        : selectedItems?.isNotEmpty ?? false
-            ? widget.items[selectedItems.first]?.value
-            : null);
+    return (selectedItems?.isNotEmpty ?? false
+        ? widget.items[selectedItems.first]?.value
+        : null);
   }
 
   int indexFromValue(T value) {
@@ -216,9 +210,7 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
     if (!_enabled) {
       return;
     }
-    if (widget.multipleSelection) {
-      selectedItems = List<int>.from(widget.selectedItems ?? []);
-    } else if (widget.value != null) {
+    if (widget.value != null) {
       int i = indexFromValue(widget.value);
       if (i != null && i != -1) {
         selectedItems = [i];
@@ -239,7 +231,6 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
       hint: prepareWidget(widget.searchHint),
       isCaseSensitiveSearch: widget.isCaseSensitiveSearch,
       keyboardType: widget.keyboardType,
-      multipleSelection: widget.multipleSelection,
       selectedItems: selectedItems,
       displayItem: widget.displayItem,
       dialogBox: widget.dialogBox,
