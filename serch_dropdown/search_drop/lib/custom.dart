@@ -68,7 +68,6 @@ class SearchableDropdown<T> extends StatefulWidget {
   final TextInputType keyboardType;
   final bool readOnly;
   // apagar
-  final dynamic label;
   final dynamic closeButton;
   final Color iconEnabledColor;
   final Color iconDisabledColor;
@@ -146,7 +145,6 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.selectedValueWidgetFn,
     this.keyboardType = TextInputType.text,
     this.validator,
-    this.label,
     this.searchFn,
     this.multipleSelection = false,
     this.selectedItems = const [],
@@ -183,7 +181,6 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.selectedValueWidgetFn,
     this.keyboardType = TextInputType.text,
     this.validator,
-    this.label,
     this.searchFn,
     this.multipleSelection = false,
     this.selectedItems = const [],
@@ -440,15 +437,11 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
     if (widget.validator != null) {
       validatorOutput = widget.validator(selectedResult);
     }
-    var labelOutput = prepareWidget(widget.label, parameter: selectedResult,
-        stringToWidgetFunction: (string) {
-      return (Text(string,
-          style: TextStyle(color: Colors.blueAccent, fontSize: 13)));
-    });
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        labelOutput ?? SizedBox.shrink(),
+        SizedBox.shrink(),
         Stack(
           children: <Widget>[
             Padding(
