@@ -111,7 +111,7 @@ class _MyAppState extends State<MyApp> {
       "Single menu": SearchableDropdown.single(
         items: items,
         value: selectedValue,
-        hint: "Select one",
+        hint: "Cidades",
         searchHint: null,
         onChanged: (value) {
           setState(() {

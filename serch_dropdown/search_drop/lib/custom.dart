@@ -58,7 +58,6 @@ class SearchableDropdown<T> extends StatefulWidget {
   final TextStyle style;
   final dynamic searchHint;
   final dynamic hint;
-  final dynamic disabledHint;
   final dynamic icon;
   final dynamic underline;
   final dynamic doneButton;
@@ -157,7 +156,6 @@ class SearchableDropdown<T> extends StatefulWidget {
       style: style,
       searchHint: searchHint,
       hint: hint,
-      disabledHint: disabledHint,
       icon: icon,
       underline: underline,
       iconEnabledColor: iconEnabledColor,
@@ -253,7 +251,6 @@ class SearchableDropdown<T> extends StatefulWidget {
       style: style,
       searchHint: searchHint,
       hint: hint,
-      disabledHint: disabledHint,
       icon: icon,
       underline: underline,
       iconEnabledColor: iconEnabledColor,
@@ -290,7 +287,6 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.style,
     this.searchHint,
     this.hint,
-    this.disabledHint,
     this.icon,
     this.underline,
     this.iconEnabledColor,
@@ -330,7 +326,6 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.style,
     this.searchHint,
     this.hint,
-    this.disabledHint,
     this.icon = const Icon(Icons.arrow_drop_down),
     this.underline,
     this.iconEnabledColor,
@@ -501,13 +496,9 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
     final List<Widget> items =
         _enabled ? List<Widget>.from(widget.items) : <Widget>[];
     int hintIndex;
-    if (widget.hint != null ||
-        (!_enabled && prepareWidget(widget.disabledHint) != null)) {
-      final Widget emplacedHint = _enabled
-          ? prepareWidget(widget.hint)
-          : DropdownMenuItem<Widget>(
-              child: prepareWidget(widget.disabledHint) ??
-                  prepareWidget(widget.hint));
+    if (widget.hint != null) {
+      final Widget emplacedHint = prepareWidget(widget.hint);
+
       hintIndex = items.length;
       items.add(DefaultTextStyle(
         style: _textStyle.copyWith(color: Theme.of(context).hintColor),
