@@ -68,7 +68,6 @@ class SearchableDropdown<T> extends StatefulWidget {
   final TextInputType keyboardType;
   final bool readOnly;
   // apagar
-  final TextStyle style;
   final dynamic label;
   final dynamic closeButton;
   final Color iconEnabledColor;
@@ -110,7 +109,6 @@ class SearchableDropdown<T> extends StatefulWidget {
       items: items,
       onChanged: onChanged,
       value: value,
-      style: style,
       searchHint: searchHint,
       hint: hint,
       icon: icon,
@@ -133,7 +131,6 @@ class SearchableDropdown<T> extends StatefulWidget {
     @required this.items,
     this.onChanged,
     this.value,
-    this.style,
     this.searchHint,
     this.hint,
     this.icon,
@@ -189,7 +186,6 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.label,
     this.searchFn,
     this.multipleSelection = false,
-    this.style,
     this.selectedItems = const [],
     this.displayItem,
     this.readOnly = false,
@@ -208,14 +204,6 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
   List<int> selectedItems;
   PointerThisPlease<bool> displayMenu = PointerThisPlease<bool>(false);
 
-  TextStyle get _textStyle =>
-      widget.style ??
-      (_enabled && !(widget.readOnly ?? false)
-          ? Theme.of(context).textTheme.subhead
-          : Theme.of(context)
-              .textTheme
-              .subhead
-              .copyWith(color: _disabledIconColor));
   bool get _enabled =>
       widget.items != null &&
       widget.items.isNotEmpty &&
@@ -343,7 +331,7 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
 
       hintIndex = items.length;
       items.add(DefaultTextStyle(
-        style: _textStyle.copyWith(color: Theme.of(context).hintColor),
+        style: TextStyle(color: Colors.black),
         child: IgnorePointer(
           child: emplacedHint,
           ignoringSemantics: false,
@@ -406,7 +394,7 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
         ));
 
     Widget result = DefaultTextStyle(
-      style: _textStyle,
+      style: TextStyle(color: Colors.black),
       child: Container(
         padding: padding.resolve(Directionality.of(context)),
         child: Row(
