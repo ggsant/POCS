@@ -68,7 +68,6 @@ class SearchableDropdown<T> extends StatefulWidget {
   final TextInputType keyboardType;
   final bool readOnly;
   final Function selectedValueWidgetFn;
-  // apagar
 
   factory SearchableDropdown.single({
     Key key,
@@ -254,7 +253,7 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
       ));
     }
     Widget innerItemsWidget;
-    List<Widget> list = List<Widget>();
+    List<Widget> list = [];
     selectedItems?.forEach((item) {
       list.add(widget.selectedValueWidgetFn != null
           ? widget.selectedValueWidgetFn(widget.items[item].value)
@@ -263,17 +262,13 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
     if (list.isEmpty && hintIndex != null) {
       innerItemsWidget = items[hintIndex];
     } else {
-      innerItemsWidget = Column(
-        children: list,
-      );
+      innerItemsWidget = Column(children: list);
     }
     final EdgeInsetsGeometry padding = ButtonTheme.of(context).alignedDropdown
         ? _kAlignedButtonPadding
         : _kUnalignedButtonPadding;
 
     Widget clickable = InkWell(
-        key: Key(
-            "clickableResultPlaceHolder"), //this key is used for running automated tests
         onTap: (widget.readOnly ?? false) || !_enabled
             ? null
             : () async {
