@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
-import 'custom.dart';
+import 'generic_classes.dart';
 
-class StaticConst {
-  static Widget prepareWidget(dynamic object,
-      {dynamic parameter = const NotGiven(),
-      BuildContext context,
-      Function stringToWidgetFunction}) {
+class WidgetsSearchDropDown {
+  static Widget prepareWidget(
+    dynamic object, {
+    dynamic parameter = const GenericParameter(),
+    BuildContext context,
+    Function stringToWidgetFunction,
+  }) {
     if (object == null) {
       return (null);
     }
@@ -21,7 +23,7 @@ class StaticConst {
       }
     }
     if (object is Function) {
-      if (parameter is NotGiven) {
+      if (parameter is GenericParameter) {
         if (context == null) {
           return (prepareWidget(object(),
               stringToWidgetFunction: stringToWidgetFunction));

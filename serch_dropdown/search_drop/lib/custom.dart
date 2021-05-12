@@ -1,51 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-class NotGiven {
-  const NotGiven();
-}
-
-class PointerThisPlease<T> {
-  T value;
-  PointerThisPlease(this.value);
-}
-
-Widget prepareWidget(dynamic object,
-    {dynamic parameter = const NotGiven(),
-    BuildContext context,
-    Function stringToWidgetFunction}) {
-  if (object == null) {
-    return (null);
-  }
-  if (object is Widget) {
-    return (object);
-  }
-  if (object is String) {
-    if (stringToWidgetFunction == null) {
-      return (Text(object));
-    } else {
-      return (stringToWidgetFunction(object));
-    }
-  }
-  if (object is Function) {
-    if (parameter is NotGiven) {
-      if (context == null) {
-        return (prepareWidget(object(),
-            stringToWidgetFunction: stringToWidgetFunction));
-      } else {
-        return (prepareWidget(object(context),
-            stringToWidgetFunction: stringToWidgetFunction));
-      }
-    }
-    if (context == null) {
-      return (prepareWidget(object(parameter),
-          stringToWidgetFunction: stringToWidgetFunction));
-    }
-    return (prepareWidget(object(parameter, context),
-        stringToWidgetFunction: stringToWidgetFunction));
-  }
-  return (Text("Unknown type: ${object.runtimeType.toString()}"));
-}
+import 'generic_classes.dart';
+import 'widgets_search_dropdown.dart';
 
 class SearchableDropdown<T> extends StatefulWidget {
   final List<DropdownMenuItem<T>> items;
@@ -162,7 +119,7 @@ class SearchableDropdown<T> extends StatefulWidget {
 
 class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
   List<int> selectedItems;
-  PointerThisPlease<bool> displayMenu = PointerThisPlease<bool>(false);
+  TypeValue<bool> displayMenu = TypeValue<bool>(false);
 
   bool get _enabled =>
       widget.items != null &&
@@ -213,7 +170,7 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
   Widget get menuWidget {
     return (DropdownDialog(
       items: widget.items,
-      hint: prepareWidget(widget.searchHint),
+      hint: WidgetsSearchDropDown.prepareWidget(widget.searchHint),
       isCaseSensitiveSearch: widget.isCaseSensitiveSearch,
       keyboardType: widget.keyboardType,
       selectedItems: selectedItems,
@@ -237,7 +194,8 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
         _enabled ? List<Widget>.from(widget.items) : <Widget>[];
     int hintIndex;
     if (widget.hint != null) {
-      final Widget emplacedHint = prepareWidget(widget.hint);
+      final Widget emplacedHint =
+          WidgetsSearchDropDown.prepareWidget(widget.hint);
 
       hintIndex = items.length;
       items.add(DefaultTextStyle(
@@ -293,7 +251,8 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
                 color: Colors.black,
                 size: widget.iconSize,
               ),
-              child: prepareWidget(widget.icon, parameter: selectedResult) ??
+              child: WidgetsSearchDropDown.prepareWidget(widget.icon,
+                      parameter: selectedResult) ??
                   SizedBox.shrink(),
             ),
           ],
@@ -397,7 +356,7 @@ class DropdownDialog<T> extends StatefulWidget {
   final dynamic doneButton;
   final Function validator;
   final bool dialogBox;
-  final PointerThisPlease<bool> displayMenu;
+  final TypeValue<bool> displayMenu;
   final BoxConstraints menuConstraints;
   final Function callOnPop;
   final Color menuBackgroundColor;
