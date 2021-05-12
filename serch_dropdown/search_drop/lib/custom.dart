@@ -69,7 +69,6 @@ class SearchableDropdown<T> extends StatefulWidget {
   final bool readOnly;
   final Function selectedValueWidgetFn;
   // apagar
-  final List<int> selectedItems;
   final Function displayItem;
   final Color menuBackgroundColor;
 
@@ -132,7 +131,6 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.clearIcon = const Icon(Icons.clear),
     this.selectedValueWidgetFn,
     this.keyboardType = TextInputType.text,
-    this.selectedItems = const [],
     this.displayItem,
     this.dialogBox,
     this.menuConstraints,
@@ -161,7 +159,6 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.clearIcon = const Icon(Icons.clear),
     this.selectedValueWidgetFn,
     this.keyboardType = TextInputType.text,
-    this.selectedItems = const [],
     this.displayItem,
     this.readOnly = false,
     this.menuBackgroundColor,
