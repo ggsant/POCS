@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'generic_classes.dart';
 
-class WidgetsSearchDropDown {
+class PrepareWidget {
   static Widget prepareWidget(
     dynamic object, {
     dynamic parameter = const GenericParameter(),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:search_drop/custom.dart';
 
+import 'searchableDropdown.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
@@ -51,7 +53,7 @@ class _MyAppState extends State<MyApp> {
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(20),
-          child: SearchableDropdown.single(
+          child: SearchableDropdown.citys(
             items: items,
             value: selectedValue,
             hint: "Cidades",
