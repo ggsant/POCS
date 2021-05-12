@@ -514,13 +514,6 @@ class _DropdownDialogState<T> extends State<DropdownDialog> {
     );
   }
 
-  // bool get valid {
-  //   if (widget.validator == null) {
-  //     return (true);
-  //   }
-  //   return (widget.validator(selectedResult) == null);
-  // }
-
   Widget searchBar() {
     return Container(
       child: Stack(
