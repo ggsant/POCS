@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-const EdgeInsetsGeometry _kAlignedButtonPadding =
-    EdgeInsetsDirectional.only(start: 16.0, end: 4.0);
-const EdgeInsets _kUnalignedButtonPadding = EdgeInsets.zero;
-
 class NotGiven {
   const NotGiven();
 }
@@ -265,8 +261,8 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
       innerItemsWidget = Column(children: list);
     }
     final EdgeInsetsGeometry padding = ButtonTheme.of(context).alignedDropdown
-        ? _kAlignedButtonPadding
-        : _kUnalignedButtonPadding;
+        ? EdgeInsetsDirectional.only(start: 16.0, end: 4.0)
+        : EdgeInsets.zero;
 
     Widget clickable = InkWell(
         onTap: (widget.readOnly ?? false) || !_enabled
