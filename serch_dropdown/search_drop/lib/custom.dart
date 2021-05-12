@@ -69,7 +69,6 @@ class SearchableDropdown<T> extends StatefulWidget {
   final bool readOnly;
   final Function selectedValueWidgetFn;
   // apagar
-  final Function displayItem;
   final Color menuBackgroundColor;
 
   factory SearchableDropdown.single({
@@ -131,7 +130,6 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.clearIcon = const Icon(Icons.clear),
     this.selectedValueWidgetFn,
     this.keyboardType = TextInputType.text,
-    this.displayItem,
     this.dialogBox,
     this.menuConstraints,
     this.readOnly = false,
@@ -159,7 +157,6 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.clearIcon = const Icon(Icons.clear),
     this.selectedValueWidgetFn,
     this.keyboardType = TextInputType.text,
-    this.displayItem,
     this.readOnly = false,
     this.menuBackgroundColor,
   })  : assert(items != null),
@@ -229,7 +226,6 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
       isCaseSensitiveSearch: widget.isCaseSensitiveSearch,
       keyboardType: widget.keyboardType,
       selectedItems: selectedItems,
-      displayItem: widget.displayItem,
       dialogBox: widget.dialogBox,
       displayMenu: displayMenu,
       menuConstraints: widget.menuConstraints,
