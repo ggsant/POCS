@@ -69,7 +69,6 @@ class SearchableDropdown<T> extends StatefulWidget {
   final bool readOnly;
   final Function selectedValueWidgetFn;
   // apagar
-  final Color menuBackgroundColor;
 
   factory SearchableDropdown.single({
     Key key,
@@ -111,7 +110,6 @@ class SearchableDropdown<T> extends StatefulWidget {
       dialogBox: dialogBox,
       menuConstraints: menuConstraints,
       readOnly: readOnly,
-      menuBackgroundColor: menuBackgroundColor,
     ));
   }
 
@@ -133,7 +131,6 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.dialogBox,
     this.menuConstraints,
     this.readOnly = false,
-    this.menuBackgroundColor,
   })  : assert(items != null),
         assert(iconSize != null),
         assert(isExpanded != null),
@@ -158,7 +155,6 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.selectedValueWidgetFn,
     this.keyboardType = TextInputType.text,
     this.readOnly = false,
-    this.menuBackgroundColor,
   })  : assert(items != null),
         assert(iconSize != null),
         assert(isExpanded != null),
@@ -229,7 +225,6 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
       dialogBox: widget.dialogBox,
       displayMenu: displayMenu,
       menuConstraints: widget.menuConstraints,
-      menuBackgroundColor: widget.menuBackgroundColor,
       callOnPop: () {
         if (!widget.dialogBox &&
             widget.onChanged != null &&
